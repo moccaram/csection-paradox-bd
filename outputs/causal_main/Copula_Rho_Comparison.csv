@@ -1,0 +1,25 @@
+"Year","Stage","Treatment","Copula","Copula_Code","Dependence_Theta"
+"2004","Stage1_Csection","C-section","Gaussian","Gaussian_default",0.468475228651551
+"2004","Stage2_ANC","ANC 4+","Gaussian","Gaussian_default",0.101034937874894
+"2004","Stage1_Csection","C-section","Frank","F",4.0265691043511
+"2004","Stage2_ANC","ANC 4+","Frank","F",-0.394629303728278
+"2004","Stage1_Csection","C-section","Clayton","C0",0.223949434355331
+"2004","Stage2_ANC","ANC 4+","Clayton","C0",0.019173127973358
+"2011","Stage1_Csection","C-section","Gaussian","Gaussian_default",0.212271836759096
+"2011","Stage2_ANC","ANC 4+","Gaussian","Gaussian_default",-0.110063830181602
+"2011","Stage1_Csection","C-section","Frank","F",-0.226570082630462
+"2011","Stage2_ANC","ANC 4+","Frank","F",-0.457761270855459
+"2011","Stage1_Csection","C-section","Clayton","C0",0.266993308809883
+"2011","Stage2_ANC","ANC 4+","Clayton","C0",4.13993771878517e-08
+"2017-2018","Stage1_Csection","C-section","Gaussian","Gaussian_default",-0.230584066558698
+"2017-2018","Stage2_ANC","ANC 4+","Gaussian","Gaussian_default",-0.359618514436599
+"2017-2018","Stage1_Csection","C-section","Frank","F",-2.31423829668904
+"2017-2018","Stage2_ANC","ANC 4+","Frank","F",-2.67685116109342
+"2017-2018","Stage1_Csection","C-section","Clayton","C0",0.0399093613990104
+"2017-2018","Stage2_ANC","ANC 4+","Clayton","C0",4.13993771878517e-08
+"2022","Stage1_Csection","C-section","Gaussian","Gaussian_default",-0.144131785496526
+"2022","Stage2_ANC","ANC 4+","Gaussian","Gaussian_default",0.414744951254176
+"2022","Stage1_Csection","C-section","Frank","F",-1.77130107139653
+"2022","Stage2_ANC","ANC 4+","Frank","F",2.38822290050161
+"2022","Stage1_Csection","C-section","Clayton","C0",0.0427120367841362
+"2022","Stage2_ANC","ANC 4+","Clayton","C0",0.498503444915959

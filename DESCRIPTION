@@ -1,0 +1,56 @@
+Package: csectionparadoxbd
+Type: ResearchCompendium
+Title: Identification Diagnostics for C-Section Causal Inference on Bangladesh DHS Data
+Version: 1.0.0
+Date: 2026-05-23
+Authors@R:
+    person("Mukarram", "Hosain",
+           email = "moccaram@gmail.com",
+           role = c("aut", "cre"))
+Description:
+    A reproducible research compendium for the analysis described in
+    docs/BRIEF.md. The repository contains the full pipeline used to
+    estimate the effect of C-section delivery on under-24-month child
+    mortality in Bangladesh across DHS waves 2004, 2011, 2017-18, and
+    2022 — and the diagnostic chain that demonstrates why the resulting
+    point estimate does not warrant a causal interpretation. The
+    pipeline includes descriptive evidence of Bangladesh's
+    supply-constrained to demand-driven C-section regime transition,
+    spatial models using Malaria Atlas Project travel-time instruments,
+    a recursive bivariate probit (RBVP) with cluster-bootstrap
+    inference, three formal identification diagnostics (cross-instrument
+    placebo, Wooldridge-style endogeneity test via 2SRI, copula
+    sensitivity), and a modern-inference layer (E-value, sensemakr,
+    simplified Acerenza inequalities, Chow test).
+License: CC BY 4.0 + file LICENSE
+URL: https://github.com/moccaram/csection-paradox-bd
+BugReports: https://github.com/moccaram/csection-paradox-bd/issues
+Encoding: UTF-8
+LazyData: true
+Depends:
+    R (>= 4.1.0)
+Imports:
+    GJRM,
+    AER,
+    sandwich,
+    lmtest,
+    pbivnorm,
+    boot,
+    EValue,
+    sensemakr,
+    dplyr,
+    tidyr,
+    ggplot2,
+    here,
+    readr
+Suggests:
+    sf,
+    terra,
+    rdhs,
+    malariaAtlas,
+    lme4,
+    knitr,
+    rmarkdown
+SystemRequirements:
+    GDAL (>= 3.0), PROJ (>= 6.0), GEOS (>= 3.7) — required for sf/terra
+    (spatial scripts only)

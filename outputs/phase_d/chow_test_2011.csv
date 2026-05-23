@@ -1,0 +1,2 @@
+test,F_stat,df1,df2,p_value,pre_2011_slope,post_2011_slope_diff,note
+Chow test at predetermined break 2011,246.36427714350037,2,2,0.004042620913366088,1.4796588249088494,0.9808092021742543,T = 6 DHS waves; statistical significance constrained. Plot is the primary showcase.

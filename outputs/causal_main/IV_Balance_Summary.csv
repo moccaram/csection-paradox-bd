@@ -1,0 +1,9 @@
+"Year","IV","N_Confounders","N_Significant","Pct_Significant","Balance_Pass"
+"2004","ANC IV",7,5,71.4,FALSE
+"2004","C-section IV",7,6,85.7,FALSE
+"2011","ANC IV",7,5,71.4,FALSE
+"2011","C-section IV",7,5,71.4,FALSE
+"2017-2018","ANC IV",7,4,57.1,FALSE
+"2017-2018","C-section IV",7,6,85.7,FALSE
+"2022","ANC IV",7,5,71.4,FALSE
+"2022","C-section IV",7,4,57.1,FALSE

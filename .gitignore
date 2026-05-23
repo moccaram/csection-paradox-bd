@@ -1,0 +1,73 @@
+# R-specific
+.Rhistory
+.RData
+.Rapp.history
+.Renviron
+.Rprofile.user
+.Rproj.user/
+*.Rproj
+.Ruserdata
+
+# renv / packrat
+renv/library/
+renv/python/
+renv/staging/
+renv/local/
+renv/cellar/
+packrat/lib*/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# DHS / API credentials — NEVER commit
+rdhs.json
+.dhs_credentials
+*.key
+*.pem
+
+# Raw data — not redistributable under DHS license
+data/raw/
+data/raw/**
+*.dat
+*.DAT
+
+# Heavy spatial rasters — re-download via DOWNLOAD_MALARIA_ATLAS.R
+data/spatial/*.tif
+data/spatial/*.TIF
+data/spatial/rasters/
+
+# Large intermediate RDS (commit only the small final ones)
+outputs/intermediate/
+outputs/**/*_temp.rds
+outputs/**/*_boot_*.rds
+
+# Logs
+*.log
+*.out
+tmp/
+.tmp/
+
+# Manuscript build artifacts
+manuscript/_*
+manuscript/*.aux
+manuscript/*.bbl
+manuscript/*.blg
+manuscript/*.fdb_latexmk
+manuscript/*.fls
+manuscript/*.synctex.gz
+manuscript/*.toc
+
+# Knit/render cache
+*_cache/
+*_files/
+*.html
+*.pdf
+!figures/**/*.pdf
+!docs/**/*.pdf

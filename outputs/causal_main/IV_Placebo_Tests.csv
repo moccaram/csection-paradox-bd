@@ -1,0 +1,9 @@
+"Year","N","Placebo","IV_Used","True_Target","Wrong_Tgt","Coefficient","SE","P_value","Significant","Pass"
+"2004",3478,"IV_csec → ANC (wrong treatment)","C-section IV","C-section","ANC 4+",2.2370779284859,0.239457560414564,9.42877258842955e-21,TRUE,FALSE
+"2004",3478,"IV_anc → C-section (wrong treatment)","ANC IV","ANC 4+","C-section",1.01155315874187,0.16668286872511,1.28926485829942e-09,TRUE,FALSE
+"2011",4661,"IV_csec → ANC (wrong treatment)","C-section IV","C-section","ANC 4+",0.760537983964444,0.102856833100191,1.42324729884943e-13,TRUE,FALSE
+"2011",4661,"IV_anc → C-section (wrong treatment)","ANC IV","ANC 4+","C-section",0.505090486929604,0.0921103256937417,4.1690226906283e-08,TRUE,FALSE
+"2017-2018",4793,"IV_csec → ANC (wrong treatment)","C-section IV","C-section","ANC 4+",0.738473831554514,0.078049569879367,3.03265893978514e-21,TRUE,FALSE
+"2017-2018",4793,"IV_anc → C-section (wrong treatment)","ANC IV","ANC 4+","C-section",0.651784175455147,0.0740481994239395,1.3420642352485e-18,TRUE,FALSE
+"2022",4671,"IV_csec → ANC (wrong treatment)","C-section IV","C-section","ANC 4+",0.480606895100039,0.0697109665052568,5.41384454610296e-12,TRUE,FALSE
+"2022",4671,"IV_anc → C-section (wrong treatment)","ANC IV","ANC 4+","C-section",0.587613909059704,0.0749352107060121,4.44748754811561e-15,TRUE,FALSE
