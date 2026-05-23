@@ -18,7 +18,7 @@ for (d in c(GEO_DIR, FAC_DIR)) dir.create(d, showWarnings=FALSE, recursive=TRUE)
 set_rdhs_config(
   email       = "moccaram@gmail.com",
   project     = "Analyzing Verbal Autopsy Data from DHS Dataset: Insights into Mortality Patterns and Public Health in Low-Income Countries",
-  password    = "Hhaisenberg69*",
+  password    = "***",
   config_path = file.path(BASE, "rdhs.json"),
   cache_path  = GPS_DIR,
   global      = FALSE
