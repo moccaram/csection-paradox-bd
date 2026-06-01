@@ -1,0 +1,64 @@
+---
+title: "Preface"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## What is this book?
+
+This is a research compendium for a methodological audit of C-section's effect on under-five mortality in Bangladesh, using DHS waves 2004, 2011, 2017–18, and 2022. It is written for three audiences simultaneously — social scientists, IV econometricians, and statisticians — and structured so that each audience finds at least one section anchored in their working vocabulary.
+
+The book extends, with appropriate caveats, into India and Pakistan via the multi-country appendix in Part III, where the DHS/NFHS spatial pipeline allows a cross-country robustness comparison.
+
+## Reading the chapters
+
+Every chapter follows the same four-section template:
+
+1. **Motivation** — what question this method addresses and how it ties into the brief's central claim.
+2. **Data and setup** — the data file(s), the script(s), the variables touched.
+3. **Results** — tables, figures, and the headline number(s) from this estimator/diagnostic.
+4. **Interpretation** — how to read the result *given everything before it in the book*.
+
+Heavy computational scripts that ran the estimation are kept under `scripts/` and *displayed* via fold-able code blocks (Quarto's `#| file:` chunk option). Chapters that do summarize a heavy script read its **pre-computed output CSV/RDS** from `outputs/`. The book renders in under five minutes on a cold cache because the estimation has already happened.
+
+## Data access prerequisites
+
+This repository ships with **aggregate derived data** that comply with the DHS Program data-use terms. The raw individual-level microdata are not redistributable. To rerun the full causal pipeline from raw microdata:
+
+1. Register at <https://dhsprogram.com> and submit a project description.
+2. Once approved (typically 1–3 business days), configure the `rdhs` API via `~/.dhs_credentials`.
+3. Run `scripts/10_download/DOWNLOAD_ALL_DHS_DATASETS.R` to fetch the BDHS recodes and `scripts/10_download/DOWNLOAD_MALARIA_ATLAS.R` to fetch the Malaria Atlas Project travel-time rasters.
+4. The full replication guide is in `notes/REPLICATION_GUIDE.md` (committed in the source tree).
+
+Three tiers of reproduction are supported:
+
+- **Tier 1** — no DHS access required: all five descriptive figures and all four modern-inference outputs reproduce from committed aggregates in ~5 minutes.
+- **Tier 2** — no DHS access required: the full causal pipeline (RBVP, 2SRI, copula sensitivity, IV validity, Conley bounds) reads its input from committed processed RDS files in `outputs/causal_main/`. Total runtime is roughly 1 hour, dominated by the cluster bootstrap.
+- **Tier 3** — DHS access required: full reproduction from raw microdata, including spatial GPS merge and the India/Pakistan appendices.
+
+## What this book deliberately does NOT do
+
+The book restricts itself to the methodological audit described above. The following directions, although discussed in the conclusion as natural extensions, are **out of scope** for this compendium:
+
+- Structural equation modeling (SEM) of latent maternal-care quality
+- Bayesian spatiotemporal models (e.g., Stan/INLA)
+- COVID-19 disruption analysis (the 2020 surge is mentioned descriptively but not modeled)
+- Resubmission of any associated manuscript
+
+The conclusion (Chapter 20) names each of these as future work and discusses what data and design would be required to answer the underlying question (C-section's causal effect on child morbidity, rather than mortality).
+
+## Repository navigation cheat-sheet
+
+| If you want to... | Go to |
+|---|---|
+| The narrative-only summary | [Chapter 1](01-introduction.qmd) |
+| The wave-stratified ATE table | [Chapter 7](07-rbvp_estimation.qmd) |
+| The diagnostic that rejects the IV | [Chapter 9](09-iv_validity.qmd) |
+| The robustness value sensitivity plots | [Chapter 13](13-sensemakr.qmd) |
+| The multi-country spatial models | [Chapter 18](18-multilevel_spatial.qmd) and [Chapter 19](19-multicountry.qmd) |
+| The full bug-fix changelog | [Appendix B](appendixB-changelog.qmd) |
+| The pipeline graph and methodology map | [Appendix A](appendixA-pipeline_graph.qmd) |

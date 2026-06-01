@@ -1,0 +1,58 @@
+---
+title: "Conley plausibly-exogenous bounds"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+The exclusion restriction is not testable directly, but it can be *relaxed*. Conley, Hansen & Rossi [@conley2012plausibly] propose a sensitivity analysis: allow the instrument to have a direct effect of size $\gamma$ on the outcome, and ask how large $\gamma$ would need to be to nullify the IV estimate. Under exact identification (the canonical case), the bias correction is
+$$
+\hat{\beta}_{\text{corrected}} = \hat{\beta}_{\text{IV}} - \gamma / \hat{\pi}
+$$
+where $\hat{\pi}$ is the first-stage coefficient.
+
+This chapter applies the formula on the linear-probability-model 2SLS scale rather than the latent-probit scale, fixing a scale-mismatch bug (A1) that was present in the original implementation.
+
+## Data and setup
+
+Implementation: `scripts/40_causal_main/45_conley_bounds.R`. The LPM-2SLS estimate is obtained via `AER::ivreg`, with cluster-robust standard errors via `sandwich::vcovCL`. The first-stage F statistic and the breakdown $\gamma$ (the value at which the corrected estimate crosses zero) are both reported.
+
+## Results
+
+```{r}
+#| label: tbl-conley
+#| tbl-cap: "Linear-probability-model 2SLS estimates and Conley breakdown points. The 95% CI at γ = 0 (no exclusion violation) is shown; even with γ = 0 these CIs span zero in all four waves."
+conley <- load_conley_estimates()
+conley |> book_table(digits = 3)
+```
+
+```{r}
+#| label: fig-conley
+#| fig-cap: "Conley bounds visualization. The 95% CI's span zero immediately in all four waves at γ = 0; the breakdown γ — the size of direct effect that would change the sign — is small in absolute terms."
+#| echo: false
+knitr::include_graphics(here::here("figures", "Figure_7_Conley_Bounds_Corrected.png"))
+```
+
+## Interpretation
+
+Two findings:
+
+1. **The LPM-2SLS CIs at $\gamma = 0$ span zero in all four waves.** Even with the exclusion restriction assumed exactly satisfied, the 2SLS estimator does not detect a statistically significant effect of C-section on under-24-month mortality in any wave. The RBVP's 2022 significance in Chapter 7 (which used a different estimator and a different scale) does not survive the linear-probability cross-check.
+
+2. **The breakdown $\gamma$ is small in absolute terms** — on the order of one percentage point for the pre-2022 waves. Any plausible direct effect of community-level healthcare access on mortality would exceed this and flip the sign.
+
+The Conley framework is the most conservative IV diagnostic available: it asks how much the exclusion restriction can be violated before the substantive conclusion changes. The answer here is "barely at all." When combined with Chapter 9's placebo failures (which show that the exclusion restriction *is* violated, with the order of magnitude unknown), the conclusion is that the LPM-2SLS estimator is not identified for this question on this data.
+
+## Code
+
+```{r}
+#| file: scripts/40_causal_main/45_conley_bounds.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/40_causal_main/45_conley_bounds.R — LPM-2SLS + Conley plausibly-exogenous bounds"
+```

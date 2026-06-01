@@ -71,3 +71,11 @@ manuscript/*.toc
 *.pdf
 !figures/**/*.pdf
 !docs/**/*.pdf
+!docs/**/*.html
+
+# Quarto-specific
+/.quarto/
+**/*.quarto_ipynb
+_freeze/
+_book/
+.Rproj.user/

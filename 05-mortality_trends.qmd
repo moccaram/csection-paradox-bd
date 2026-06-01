@@ -1,0 +1,45 @@
+---
+title: "Under-five mortality and cause composition"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+The C-section trajectory is one half of the story; the mortality trajectory is the other. Bangladesh's under-five mortality rate (U5MR) fell dramatically over the same eighteen-year window — from roughly 108 to 37 per 1,000 live births. Most of that decline reflects secular trends in nutrition, sanitation, vaccine coverage, and skilled birth attendance, *independent* of C-section access. Showing the mortality trajectory and its cause composition makes one important point about Part II's results: even if the RBVP were correctly identified, C-section's marginal contribution to under-24-month mortality in 2022 should be expected to be small simply because *total* mortality is much smaller and composed of causes that operate through different channels.
+
+## Data and setup
+
+Cause-specific mortality estimates with bootstrap 95% CI come from `data/processed/descriptive/u5mr_estimates.csv`. The total U5MR is the sum of cause-specific CSMRs (cause-specific mortality rates per 1,000 live births).
+
+## Results
+
+```{r}
+#| label: fig-mortality
+#| fig-cap: "Cause-specific under-five mortality trajectories in Bangladesh, 2004–2022. The black line shows the total U5MR; colored lines show the six leading causes by 2004 baseline. Ribbons are bootstrap 95% CI per cause."
+#| echo: false
+knitr::include_graphics(here::here("figures", "05_mortality_trends.png"))
+```
+
+## Interpretation
+
+Two patterns are relevant for Part II:
+
+1. The total U5MR fell sharply across the window. Even a true *protective* effect of C-section would have to be quite large to detect in the late waves, because there is much less variation in the outcome.
+
+2. The cause composition *also* changed. Pneumonia, infections, and birth asphyxia — the dominant causes in 2004 — declined sharply by 2022, while underlying base rates for some causes (e.g., congenital abnormality) became more visible as competing causes receded. C-section primarily affects birth-related mortality (asphyxia, obstructed labor, neonatal infection). If birth-related mortality is already a smaller share of a smaller total, the *level* of the C-section ATE we should expect under causal identification is also smaller.
+
+This is consistent with what the RBVP returns in Chapter 7 (a 1.5 percentage-point effect on a baseline of roughly 5%), and it strengthens — rather than weakens — the brief's argument that the field needs to pivot from mortality to morbidity outcomes.
+
+## Code
+
+```{r}
+#| file: scripts/20_descriptive/25_mortality_trends.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/20_descriptive/25_mortality_trends.R"
+```

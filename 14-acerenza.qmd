@@ -1,0 +1,73 @@
+---
+title: "Acerenza testable inequalities for the bivariate probit"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+Acerenza, Bartalotti & Kédagni [@acerenza2023testable] derive six testable inequalities implied by the identifying assumptions of the bivariate probit. The assumptions are: joint normality of the latent errors, instrument exogeneity, and the exclusion restriction. If any of the six inequalities is violated in the data — that is, if its lower-bound bootstrap CI exceeds zero — at least one of the assumptions does not hold.
+
+This chapter implements a simplified bootstrap analog of the test, applied to the 2022 wave (the only wave with a statistically significant RBVP headline). The full Chernozhukov-Lee-Rosen machinery is not used; instead, sample analogs of the six population inequalities are computed and their CIs obtained by 500-replicate bootstrap.
+
+## Data and setup
+
+Implementation: `scripts/50_phase_d_modern/53_acerenza_inequalities.R`. The 2022 wave is filtered from `outputs/causal_main/data_with_instruments.rds`. The RBVP is refit on this wave to obtain $\hat{\beta}$ (outcome-equation intercept) and $\hat{\alpha}$ (treatment coefficient). The instrument is binned into deciles; the six inequalities are evaluated bin-by-bin and the supremum / infimum taken.
+
+## The six inequalities
+
+Let $Y$ = `child_died`, $D$ = `c_section_yes`, $Z$ = community LOO IV, and $\Phi$ the standard normal CDF. The bivariate probit's identifying assumptions imply:
+
+1. $\sup_z E[YD \mid Z=z] \leq \Phi(\beta + \alpha)$
+2. $\sup_z E[Y(1-D) \mid Z=z] \leq \Phi(\beta)$
+3. $\sup_z E[(1-Y)D \mid Z=z] \leq 1 - \Phi(\beta + \alpha)$
+4. $\sup_z E[(1-Y)(1-D) \mid Z=z] \leq 1 - \Phi(\beta)$
+5. $\Phi(\min(\beta+\alpha, \beta)) \leq \inf_z E[Y \mid Z=z]$
+6. $1 - \Phi(\max(\beta+\alpha, \beta)) \leq \inf_z E[1-Y \mid Z=z]$
+
+A positive violation statistic with a bootstrap lower CI also above zero rejects that inequality at $\alpha = 0.05$.
+
+## Results
+
+```{r}
+#| label: tbl-acerenza
+#| tbl-cap: "Sample-analog violations of the six Acerenza-Bartalotti-Kédagni inequalities for the 2022 wave. Inequality #5 is rejected — its lower CI exceeds zero."
+ac <- load_acerenza()
+ac |>
+  dplyr::transmute(
+    inequality, description,
+    `Violation` = sprintf("%+.3f", point_violation),
+    `CI lower` = sprintf("%+.3f", ci_lower),
+    `CI upper` = sprintf("%+.3f", ci_upper),
+    Rejected = ifelse(rejected, "**yes**", "no")
+  ) |>
+  book_table(align = c("l","l","r","r","r","c"))
+```
+
+```{r}
+#| label: fig-acerenza
+#| fig-cap: "Forest plot of the six inequality violations for the 2022 wave. Positive violation with lower-CI > 0 rejects the inequality. Inequality 5 (Φ(min(β+α, β)) ≤ inf E[Y|Z]) is rejected — the model implies a minimum mortality probability that the data exceeds."
+#| echo: false
+knitr::include_graphics(here::here("figures", "phase_d", "acerenza_violations.png"))
+```
+
+## Interpretation
+
+Inequality 5 is rejected at the 5% level: the model's implied minimum mortality probability across IV strata is *exceeded* by the data. This is formal econometric confirmation — in the modern identification-theory idiom — that **at least one of the bivariate probit's identifying assumptions is not consistent with the data for this wave.** The candidates are joint normality, instrument exogeneity, exclusion restriction.
+
+Chapter 9 already showed the exclusion restriction is violated. Chapter 10 already showed joint normality is fragile. Chapter 14 adds an *independent* test that catches one of those failures from a different angle.
+
+The N for the 2022 wave (≈ 4,992) is large enough for the Acerenza test to be approximately correctly sized in their Table 1 calibration — over-rejection at small N is a documented concern, but at this sample size the test's nominal level should hold.
+
+## Code
+
+```{r}
+#| file: scripts/50_phase_d_modern/53_acerenza_inequalities.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/50_phase_d_modern/53_acerenza_inequalities.R — simplified bootstrap analog"
+```

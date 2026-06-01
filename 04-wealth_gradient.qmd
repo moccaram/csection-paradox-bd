@@ -1,0 +1,43 @@
+---
+title: "The wealth gradient by regime"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+A second signature of the supply-to-demand regime change is the *steepness* of the wealth gradient in C-section uptake. Under supply constraints, only the wealthiest households can reach a facility for surgery; the gradient is compressed because the absolute rates are tiny everywhere. Under demand-driven conditions, the gradient steepens dramatically: the surge is concentrated in the upper wealth quintiles, where elective procedures are concentrated in private clinics.
+
+This is consistent with the broader LMIC literature on the political economy of C-section [@sujon2025cesarean].
+
+## Data and setup
+
+The pre-aggregated wealth-quintile counts by regime are in `data/processed/descriptive/P2_Wealth_Gradient_By_Regime.csv`. The "supply-constrained" regime is the pooled 2004 + 2007 BDHS waves; "demand-driven" is 2011 onward.
+
+## Results
+
+```{r}
+#| label: fig-wealth-gradient
+#| fig-cap: "Wealth gradient in C-section uptake by regime, Bangladesh. In the supply-constrained era the Q1–Q5 gradient is compressed (1.3% → 23.9%); in the demand-driven era it steepens (11.3% → 56.6%)."
+#| echo: false
+knitr::include_graphics(here::here("figures", "04_wealth_gradient.png"))
+```
+
+## Interpretation
+
+The wealth gradient under demand-driven conditions implies that *who* gets a C-section is increasingly correlated with *who* is at low baseline risk for adverse outcomes — exactly the selection mechanism that drives the wave-by-wave sign flip described in Chapter 1.
+
+An IV approach that uses *community-level* selection (the leave-one-out community C-section rate) cannot disentangle individual maternal risk from community-level demand pressure, because both vary together with the wealth gradient. Chapters 6–11 quantify the resulting identification failure.
+
+## Code
+
+```{r}
+#| file: scripts/20_descriptive/24_wealth_gradient.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/20_descriptive/24_wealth_gradient.R"
+```

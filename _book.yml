@@ -1,0 +1,59 @@
+book:
+  title: "The South Asian C-Section Paradox"
+  subtitle: "Identification diagnostics and the regime-shift problem in Bangladesh maternal-health data"
+  author:
+    - name: Mukarram Hosain
+      affiliation: "M.Sc. Data Science, Shahjalal University of Science and Technology"
+      email: moccaram@gmail.com
+      url: https://github.com/moccaram
+  date: today
+  site-url: https://moccaram.github.io/csection-paradox-bd/
+  repo-url: https://github.com/moccaram/csection-paradox-bd
+  repo-actions: [edit, issue]
+  reader-mode: true
+  sharing: [twitter, linkedin]
+  sidebar:
+    style: docked
+    pinned: true
+    foreground: "primary"
+  page-navigation: true
+  back-to-top-navigation: true
+  page-footer:
+    left: |
+      &copy; 2026 Mukarram Hosain. MIT License.
+    right: |
+      Built with [Quarto](https://quarto.org/)
+  chapters:
+    - index.qmd
+    - 00-preface.qmd
+    - part: "**Part I — Descriptive Trends & Regime Transition**"
+      chapters:
+        - 01-introduction.qmd
+        - 02-csec_trajectory.qmd
+        - 03-regime_transition.qmd
+        - 04-wealth_gradient.qmd
+        - 05-mortality_trends.qmd
+    - part: "**Part II — Advanced Econometric Modeling**"
+      chapters:
+        - 06-econometric_framework.qmd
+        - 07-rbvp_estimation.qmd
+        - 08-two_stage_residual.qmd
+        - 09-iv_validity.qmd
+        - 10-copula_sensitivity.qmd
+        - 11-conley_bounds.qmd
+        - 12-evalue.qmd
+        - 13-sensemakr.qmd
+        - 14-acerenza.qmd
+        - 15-chow_break.qmd
+    - part: "**Part III — Spatial Pipeline & Multi-country Robustness**"
+      chapters:
+        - 16-spatial_framework.qmd
+        - 17-travel_time_iv.qmd
+        - 18-multilevel_spatial.qmd
+        - 19-multicountry.qmd
+    - 20-conclusion.qmd
+    - references.qmd
+  appendices:
+    - appendixA-pipeline_graph.qmd
+    - appendixB-changelog.qmd
+    - appendixC-audit_log.qmd

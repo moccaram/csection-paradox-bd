@@ -1,0 +1,48 @@
+---
+title: "The supply-to-demand regime transition"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+The argument that the C-section trajectory is not a single phenomenon — that it is a *regime transition* with two qualitatively different selection mechanisms before and after roughly 2011 — needs descriptive evidence. Sector decomposition is the strongest single piece: within the public sector, the C-section rate stayed roughly constant from 2004 to 2022; within the private sector, it nearly doubled, *and* the private sector grew to over four-fifths of all C-section deliveries [@sujon2025cesarean].
+
+This is precisely the kind of structural change that breaks IV identification: not the level shifts, but the change in *what the instrument means* over time [@angrist2014peer; @betz2018spatial].
+
+## Data and setup
+
+Sector decomposition data come from `data/processed/descriptive/P1_Sector_Decomp_All.csv`. Each row is a country × year × sector combination with two values: the within-sector C-section rate, and the sector's share of total C-section deliveries.
+
+## Results
+
+```{r}
+#| label: fig-sector-decomp
+#| fig-cap: "Two-panel decomposition of Bangladesh's C-section surge. (A) The C-section rate within each sector — private grows from 55% to 84%, public hovers near 35%. (B) The private sector's share of all deliveries grows from 4% to 45%, mechanically dominating the national-level rise."
+#| echo: false
+knitr::include_graphics(here::here("figures", "03_sector_decomposition.png"))
+```
+
+## Interpretation
+
+The decomposition is unambiguous: the rise in the national C-section rate is overwhelmingly a private-sector phenomenon. Public-sector C-section rates are nearly flat over eighteen years.
+
+That fact alone changes how the instrument should be read in Part II. The "community-level leave-one-out C-section rate" — the instrument used by the RBVP in Chapter 7 — captures different things in different waves:
+
+- In 2004, a high community C-section rate signals proximity to a working obstetric facility (supply-side geography).
+- In 2022, a high community C-section rate signals private-sector density, social norms, provider-induced demand (demand-side selection).
+
+The exclusion restriction — that the IV affects mortality *only* through individual C-section status — is implausible in *either* regime, but for different reasons. Chapter 6 lays out the framework; Chapter 9 runs the cross-instrument placebo that decisively rejects the assumption.
+
+## Code
+
+```{r}
+#| file: scripts/20_descriptive/23_sector_decomposition.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/20_descriptive/23_sector_decomposition.R"
+```

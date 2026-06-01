@@ -1,0 +1,44 @@
+---
+title: "Introduction: a wave-by-wave sign flip"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## The puzzle
+
+A standard wave-by-wave logistic regression on Bangladesh DHS data spanning 2004–2022 (N = 33,732 children, 62 candidate predictors) returns a result that shouldn't be possible if the underlying causal mechanism is stable: the C-section coefficient *changes sign* across the eighteen-year observation window.
+
+> **In 2004**, C-section is associated with **higher** child mortality.
+> **In 2022**, C-section is associated with **lower** child mortality.
+
+Two coefficients with opposite signs from the same descriptive model on overlapping populations is not noise. It is a structural finding — large enough to rule out sampling variance, structured enough to demand a causal investigation.
+
+This book documents that investigation. A recursive bivariate probit (RBVP) estimator [@marra2011estimation; @greene2012econometric] is built and run; three formal identification diagnostics [@swanson2013iv; @terza2018twostage; @mcgovern2015robustness] are applied; a modern sensitivity layer [@vanderweele2017evalue; @cinelli2020sensemakr; @acerenza2023testable] tests the assumptions on which the headline estimate rests. The conclusion of the diagnostic chain is not "C-section reduces mortality." The conclusion is that **the identifying assumptions on which a causal interpretation depends are rejected by the data**.
+
+## The substantive backdrop
+
+The reason the sign flips, the book argues, is that the *data-generating process* underlying C-section selection changed dramatically between 2004 and 2022:
+
+- 2004: C-section rate ≈ 4.5%. Surgery is *access-constrained*; women who reach a facility tend to be high-risk emergencies. Selection on severity dominates.
+- 2022: C-section rate ≈ 44%, well past the WHO 15% threshold [@who2015csection; @sujon2025cesarean]. Surgery is *demand-driven*, increasingly elective, concentrated in private facilities and upper wealth quintiles.
+
+This is a *regime transition*. Standard IV strategies that assume a fixed selection mechanism cannot identify a single coherent treatment effect across that span. Chapters 6–11 work out the formal consequences; chapter 19 extends the analysis to India and Pakistan; Chapter 20 names the methodological pivot the data implies.
+
+## Sample composition
+
+```{r}
+#| label: tbl-samples
+#| tbl-cap: "Sample composition by DHS wave, after Step-1 cleaning."
+samples <- load_sample_chars()
+samples |> book_table(digits = 0)
+```
+
+## Three reader paths through this book
+
+For social scientists, the salient chapters are Part I (descriptive trajectory, regime transition, wealth gradient, mortality trends) and the modern-inference layer in Chapter 15 (predetermined Chow test, the regime-shift's structural visibility). For IV econometricians, Chapter 6 (the econometric framework), Chapter 9 (cross-instrument placebo), and Chapter 11 (Conley plausibly-exogenous bounds) carry the methodological argument. For statisticians, Chapter 7 (RBVP), Chapter 8 (2SRI Hausman test), Chapter 10 (copula sensitivity), and Chapter 14 (Acerenza testable inequalities) interrogate the bivariate probit's identifying assumptions.
+
+The conclusion (Chapter 20) is written for all three audiences in turn.

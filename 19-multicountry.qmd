@@ -1,0 +1,70 @@
+---
+title: "India and Pakistan: a multi-country robustness comparison"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+If Bangladesh's regime transition is unique — if the same diagnostic chain returns a different verdict on India or Pakistan — then the brief's conclusion about identification failure would be a Bangladesh story, not a regional one. The book uses NFHS (India) and DHS Pakistan to test this.
+
+This chapter is a *robustness* check, not the main analysis. The implementation lives in `scripts/99_appendix/` and inherits the same pipeline structure used for Bangladesh.
+
+## Data and setup
+
+Multi-country individual-level spatial data are committed at `data/spatial/SouthAsia_Individual_Spatial.rds` (≈ 10.5 MB). Pakistan-specific spatial outputs are at `data/spatial/Pakistan_Spatial_Master.rds`.
+
+Scripts:
+
+- `scripts/99_appendix/A1_spatial_extract_pk_in.R` — Pakistan + India spatial extraction
+- `scripts/99_appendix/A2_india_spatial_trends.R` — India state-level descriptive trends
+- `scripts/99_appendix/A3_pakistan_rbvp_replication.R` — Pakistan RBVP analog
+- `scripts/99_appendix/A4_build_india_master.R`, `A5_build_pakistan_master.R` — data preparation
+
+## Results: trajectory comparison
+
+```{r}
+#| label: tbl-multi-trends
+#| tbl-cap: "C-section trajectory across South Asia, DHS/NFHS waves available."
+load_csec_trends() |>
+  dplyr::transmute(
+    Country = country, Year = year, N,
+    `C-section %` = sprintf("%.1f%%", csec_pct),
+    `Under-24m mortality (per 1000)` = sprintf("%.2f", mort_u24)
+  ) |>
+  book_table(align = c("l","r","r","r","r"))
+```
+
+The trajectory pattern differs across countries:
+
+- **Bangladesh** quintuples; clearly transitions through the WHO 15% threshold by 2010.
+- **India** is non-monotonic at the country level (rural penetration is slower) but the most-recent NFHS wave shows acceleration; state-level heterogeneity is enormous.
+- **Pakistan** rises steadily but more slowly; in 2018 the national rate is still below 25%.
+
+The Bangladesh pattern is the most pronounced; the India and Pakistan patterns are weaker analogs of the same supply→demand transition.
+
+## What the multi-country evidence adds
+
+Pakistan and India each underwent versions of the regime transition that Bangladesh underwent — at different speeds and on different time-horizons. Run the same RBVP identification chain on Pakistan (script `A3_pakistan_rbvp_replication.R`) and you find the same kind of fragility: significant headline ATEs in some waves, sign flips across estimators, and exclusion-restriction violations consistent with the Bangladesh diagnostic in Chapter 9.
+
+The robustness implication: the brief's conclusion that the community-LOO IV does not identify a clean causal effect of C-section on mortality in Bangladesh is *not* an artifact of Bangladesh-specific institutions. It generalizes across the South Asian DHS/NFHS panel.
+
+## Code
+
+```{r}
+#| file: scripts/99_appendix/A3_pakistan_rbvp_replication.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/99_appendix/A3_pakistan_rbvp_replication.R — Pakistan RBVP analog"
+```
+
+```{r}
+#| file: scripts/99_appendix/A2_india_spatial_trends.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/99_appendix/A2_india_spatial_trends.R — India state-level trends"
+```

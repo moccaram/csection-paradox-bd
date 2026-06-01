@@ -1,0 +1,8 @@
+---
+title: "References"
+---
+
+The complete bibliography is generated below from `references.bib` and `packages.bib` using the Chicago author-date citation style.
+
+::: {#refs}
+:::

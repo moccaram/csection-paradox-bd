@@ -1,0 +1,63 @@
+---
+title: "E-value: how fragile is the headline?"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+VanderWeele and Ding [@vanderweele2017evalue] propose a single-number summary of how robust an observed treatment-outcome association is to *unmeasured* confounding. The E-value answers: what would the risk ratio of an unmeasured confounder need to be — with both the treatment and the outcome — to fully explain away the observed association? Small E-values indicate fragile results; large E-values indicate that nullifying the result would require an implausibly strong confounder.
+
+The E-value cleanly summarizes the diagnostic stance of Chapter 11's Conley bounds, but in a different idiom: instead of asking "how much direct effect on $Y$ from $Z$?", it asks "how much confounder strength on both $D$ and $Y$?"
+
+## Data and setup
+
+Implementation: `scripts/50_phase_d_modern/51_evalue.R`. The script reads the wave-stratified ATE from `outputs/causal_main/Formal_ATE_Results.csv`, baseline mortality rates from the methodology log, converts the RD-scale ATE to RR scale, then computes the E-value via `EValue::evalues.RR`.
+
+## Results
+
+```{r}
+#| label: tbl-evalue
+#| tbl-cap: "E-value for the wave-stratified C-section ATE. The point E-value uses the observed risk ratio; the CI-based E-value uses the worse end of the 95% CI (more conservative)."
+ev <- load_evalue()
+ev |>
+  dplyr::transmute(
+    Year, N,
+    `ATE (pp)` = sprintf("%+.2f", 100 * ATE_pp),
+    `RR` = sprintf("%.2f", rr),
+    `E-value (point)` = sprintf("%.2f", ev_point),
+    `E-value (CI)` = sprintf("%.2f", ev_ci),
+    Interpretation = interpretation
+  ) |>
+  book_table(align = c("l","r","r","r","r","r","c"))
+```
+
+```{r}
+#| label: fig-evalue
+#| fig-cap: "E-values by DHS wave. The 2022 point E-value is 2.33 (moderate), but the CI-based E-value (the more honest measure) is 1.25 — easily attainable by community-level confounders."
+#| echo: false
+knitr::include_graphics(here::here("figures", "phase_d", "evalue_per_wave.png"))
+```
+
+## Interpretation
+
+The 2022 point E-value of 2.33 looks reassuring at first glance — by VanderWeele and Ding's rubric, a "moderate" result. But the CI-based E-value is 1.25.
+
+The CI-based E-value is the more honest summary because the point E-value can be artificially boosted by a wide CI happening to exclude null by a narrow margin. The 1.25 number means: an unmeasured confounder with a risk ratio of 1.25 with *both* C-section and child mortality would fully explain away the 2022 result.
+
+Given Chapter 9's evidence that the community-LOO instrument is correlated with general healthcare access at the cluster level — and Chapter 4's evidence that wealth, education, and urban residence all gradient steeply with C-section uptake in 2022 — confounders of RR = 1.25 are eminently plausible. Mother's education alone, for example, has documented effects of this magnitude on infant mortality in the LMIC literature.
+
+This is the modern-sensitivity version of the same finding the placebo test produced: the headline is not robust to plausible unmeasured confounding.
+
+## Code
+
+```{r}
+#| file: scripts/50_phase_d_modern/51_evalue.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/50_phase_d_modern/51_evalue.R — VanderWeele-Ding E-value computation"
+```

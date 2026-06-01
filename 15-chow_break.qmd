@@ -1,0 +1,69 @@
+---
+title: "Predetermined Chow test at 2011"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+If the regime transition between supply-constrained (pre-2011) and demand-driven (post-2011) Bangladesh is the structural cause of the wave-by-wave sign flip, the transition should show up as a structural break in the C-section trajectory itself. The standard tool for this is the Chow test [@chow1960test].
+
+A naïve Bai-Perron supF test for an *unknown* breakdate is not appropriate here: the asymptotic theory needs T much larger than the T = 6 DHS waves available. The predetermined Chow test — where the candidate breakdate is fixed *ex ante* from external information rather than searched in the data — has the standard F-distribution and is appropriate at small T.
+
+The candidate breakdate is 2011, justified externally by:
+
+- The WHO 15% threshold crossing in 2010 [@who2015csection]
+- The acceleration of private-sector dominance [@sujon2025cesarean]
+- The shift in the wealth gradient documented in Chapter 4
+
+Importantly, the predetermined character of the test means the resulting F-statistic, even if not statistically significant at small T, is honest evidence: the breakdate was not chosen to maximize the statistic.
+
+## Data and setup
+
+Implementation: `scripts/50_phase_d_modern/54_chow_descriptive_break.R`. Bangladesh's wave-level rate from `P1_Csec_Trends_All.csv` (T = 6 waves: 2004, 2007, 2011, 2014, 2017.5, 2022) is fit to a pooled linear model and to a split model with an interaction at 2011; the Chow F-test compares the two.
+
+## Results
+
+```{r}
+#| label: tbl-chow
+#| tbl-cap: "Predetermined Chow test at 2011, Bangladesh C-section trajectory. Despite T = 6, the predetermined-breakdate test is significant at α = 0.01."
+ch <- load_chow()
+ch |>
+  dplyr::transmute(
+    Test = test,
+    `F` = sprintf("%.2f", F_stat),
+    df = sprintf("(%d, %d)", df1, df2),
+    `p` = fmt_p(p_value),
+    `Pre-2011 slope` = sprintf("%.3f", pre_2011_slope),
+    `Post-2011 slope delta` = sprintf("%.3f", post_2011_slope_diff)
+  ) |>
+  book_table()
+```
+
+```{r}
+#| label: fig-chow
+#| fig-cap: "Bangladesh C-section trajectory with predetermined Chow break at 2011. WHO 15% threshold (green dotted) crossed in 2010; the slope discontinuity at 2011 (pre-2011 = 1.48 pp/year vs post-2011 ≈ 2.46 pp/year) is visually unambiguous."
+#| echo: false
+knitr::include_graphics(here::here("figures", "phase_d", "chow_descriptive_break.png"))
+```
+
+## Interpretation
+
+The Chow F-statistic is large (≈ 246) with a p-value of ≈ 0.004. Despite T = 6 — which would normally produce wide CIs and a weak test — the break is so dramatic that the test rejects the no-break null at α = 0.01.
+
+The substantive reading: Bangladesh's C-section trajectory is not a single linear process across 2004–2022. The pre-2011 era and the post-2011 era are statistically distinguishable phases. An IV identification strategy that assumes a *single* underlying selection mechanism across both phases — which is what the RBVP in Chapter 7 does — cannot be expected to recover a stable causal estimate.
+
+This chapter closes the diagnostic chain. Chapters 6–14 documented three independent rejections of the bivariate probit's identifying assumptions; Chapter 15 documents the structural reason. The combination is conclusive: the wave-by-wave sign flip is real, the regime transition is real, the headline 2022 RBVP estimate is fragile under every modern sensitivity diagnostic, and the field needs a different design.
+
+## Code
+
+```{r}
+#| file: scripts/50_phase_d_modern/54_chow_descriptive_break.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/50_phase_d_modern/54_chow_descriptive_break.R"
+```

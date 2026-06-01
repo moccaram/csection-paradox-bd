@@ -1,0 +1,34 @@
+---
+title: "Appendix C: Audit log"
+---
+
+The full audit log is preserved at `notes/AUDIT_LOG.md` in the source tree. It documents the chronology, decisions, and substantive findings that emerged during the pipeline audit. A high-level table of contents follows.
+
+## Audit-log sections
+
+| Section | Topic |
+|---|---|
+| 1 | Code review of `script_3_rebuilt.R` (the main RBVP pipeline) — 5 bugs found |
+| 2 | Reference provenance audit per script (which canonical references are cited, which are missing) |
+| 3 | Identification claims → references map |
+| 4 | Code-vs-paper implementation audit of 4 auxiliary scripts |
+| 5 | Discrepancy between summary docs and actual data |
+| 6 | Modern critique literature (Angrist 2014, Betz et al. 2018) — Type B gap analysis |
+| 7 | Substantive finding: endogeneity NOT detected for C-section in any wave |
+| 8 | Second round of bugs found (A10–A14) |
+
+## Substantive findings independent of code quality
+
+Three findings from the audit are independent of any implementation issue and remain valid regardless of pipeline-level changes:
+
+1. **Endogeneity is not detected by the Wooldridge-style test for C-section in any of the four BDHS waves** (Chapter 8). The residual-coefficient p-value exceeds 0.19 in all four waves. This finding comes from non-bootstrap point estimation; the cluster-bootstrap fixes (A4, A6) do not change it. The substantive implication is that the RBVP machinery may have been deployed to correct a problem the data does not show.
+
+2. **The exclusion restriction is decisively violated** by the cross-instrument placebo test (Chapter 9). 8/8 cells reject at p < 10⁻⁷; the magnitudes are nowhere near borderline. This is again a non-bootstrap, point-level finding.
+
+3. **The bivariate normality assumption fails** the copula sensitivity check (Chapter 10). 5/8 cells flip sign across Gaussian, Frank, and Clayton families.
+
+These three findings, in combination, make the case for the brief's "discard the causal claim and pivot" conclusion. None of them depends on the bootstrap-CI machinery or the cluster-resampling fix — they are diagnostic-level findings that survive whatever further methodological pass one might apply.
+
+## Decision log
+
+The full decision log (dated chronologically, with rationale for each choice) lives in source form at `notes/AUDIT_LOG.md`. The book's choices about scope (Bangladesh-primary; India/Pakistan as appendix), about which methods to include (RBVP + 2SRI + IV validity + copula + Conley + Phase D modern inference), and about which methods to defer (SEM, Bayesian spatiotemporal, COVID-19 ITS) are documented there.

@@ -1,0 +1,58 @@
+---
+title: "Travel time as IV: first-stage collapse"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+Travel time to the nearest healthcare facility is a classical IV in maternal-health economics: in supply-constrained settings, it strongly predicts whether a mother reaches a facility for delivery, while plausibly affecting child outcomes only through the delivery decision itself.
+
+Under the regime-shift hypothesis, travel time should be a *strong* first-stage instrument in the supply-constrained era (pre-2011) and a *weakening* one as the C-section trajectory becomes demand-driven. Visualizing the first-stage coefficient on travel time across waves is the most direct test of that claim.
+
+## Data and setup
+
+Travel-time-to-facility values come from the Malaria Atlas Project's accessibility raster, extracted per DHS cluster centroid (jittered at the standard DHS 5–10 km level for rural / 2 km for urban clusters). The first-stage regression — individual C-section status on log travel time, with controls — is estimated wave-by-wave.
+
+Implementation: `scripts/30_spatial/34_spatial_models_bd.R`.
+
+## Results
+
+```{r}
+#| label: fig-travel-time
+#| fig-cap: "Bangladesh travel-time-to-facility coefficient over time, from wave-by-wave first-stage regressions. The coefficient is strongly negative in early waves (longer travel → lower C-section); by 2022 it has weakened materially."
+#| echo: false
+knitr::include_graphics(here::here("figures", "06_travel_time_shift.png"))
+```
+
+```{r}
+#| label: fig-travel-forest
+#| fig-cap: "Forest plot of the travel-time first-stage coefficient across waves with 95% CIs. The pattern is consistent with a transition from supply-side to demand-side selection."
+#| echo: false
+knitr::include_graphics(here::here("figures", "08_travel_time_forest.png"))
+```
+
+## Interpretation
+
+The first-stage coefficient on log travel time declines (in absolute value) across waves. In 2004 the relationship is strong; by 2022 it is much weaker, consistent with the regime-shift account in Chapter 3.
+
+Two readings are possible:
+
+1. **Power loss.** The weakening relationship makes travel-time-based 2SLS estimation noisier in late waves. Even if exclusion held, the IV would be too weak in 2022 to identify the treatment effect with useful precision.
+
+2. **Structural change.** The instrument's meaning is changing: in 2004 travel time captured access; by 2022 it captures something else (urban / rural living style, infrastructure, demand for elective procedures). The exclusion restriction's plausibility is therefore *time-dependent*.
+
+Either reading reinforces Part II's conclusion: there is no single IV identification strategy that gives a coherent causal estimate across the full BDHS panel.
+
+## Code
+
+```{r}
+#| file: scripts/30_spatial/34_spatial_models_bd.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/30_spatial/34_spatial_models_bd.R — Bangladesh first-stage with travel time"
+```

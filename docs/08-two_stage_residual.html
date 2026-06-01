@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Two-stage residual inclusion (2SRI) and the Wooldridge endogeneity test – The South Asian C-Section Paradox</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./09-iv_validity.html" rel="next">
+<link href="./07-rbvp_estimation.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-9cd608995aaed4e1c3fe5612589b726b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-cabaf058e846aa12d11ae4e79878acb7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-econometric_framework.html"><strong>Part II — Advanced Econometric Modeling</strong></a></li><li class="breadcrumb-item"><a href="./08-two_stage_residual.html"><span class="chapter-title">Two-stage residual inclusion (2SRI) and the Wooldridge endogeneity test</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">The South Asian C-Section Paradox</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/moccaram/csection-paradox-bd" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">The South Asian C-Section Paradox</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-preface.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part I — Descriptive Trends &amp; Regime Transition</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction: a wave-by-wave sign flip</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-csec_trajectory.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bangladesh’s C-section trajectory and the WHO threshold</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-regime_transition.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">The supply-to-demand regime transition</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-wealth_gradient.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">The wealth gradient by regime</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-mortality_trends.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Under-five mortality and cause composition</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part II — Advanced Econometric Modeling</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-econometric_framework.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">The econometric framework</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-rbvp_estimation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RBVP estimation and the headline ATE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-two_stage_residual.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Two-stage residual inclusion (2SRI) and the Wooldridge endogeneity test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-iv_validity.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">IV validity: the cross-instrument placebo test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-copula_sensitivity.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Copula sensitivity: testing bivariate normality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-conley_bounds.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conley plausibly-exogenous bounds</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-evalue.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">E-value: how fragile is the headline?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-sensemakr.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">OVB sensitivity: Cinelli–Hazlett robustness values</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-acerenza.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acerenza testable inequalities for the bivariate probit</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-chow_break.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Predetermined Chow test at 2011</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part III — Spatial Pipeline &amp; Multi-country Robustness</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-spatial_framework.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Spatial framework: DHS GPS clusters and Malaria Atlas travel time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-travel_time_iv.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Travel time as IV: first-stage collapse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-multilevel_spatial.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Multilevel spatial models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-multicountry.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">India and Pakistan: a multi-country robustness comparison</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conclusion: where the analysis points</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendixA-pipeline_graph.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Appendix A: Pipeline graph and methodology map</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendixB-changelog.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Appendix B: Bug-fix changelog (A1–A14)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendixC-audit_log.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Appendix C: Audit log</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#data-and-setup" id="toc-data-and-setup" class="nav-link" data-scroll-target="#data-and-setup">Data and setup</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/moccaram/csection-paradox-bd/edit/main/08-two_stage_residual.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/moccaram/csection-paradox-bd/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-econometric_framework.html"><strong>Part II — Advanced Econometric Modeling</strong></a></li><li class="breadcrumb-item"><a href="./08-two_stage_residual.html"><span class="chapter-title">Two-stage residual inclusion (2SRI) and the Wooldridge endogeneity test</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Two-stage residual inclusion (2SRI) and the Wooldridge endogeneity test</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>The RBVP in Chapter 7 was designed to <em>correct</em> for endogeneity in C-section selection. Before relying on it, one should test for endogeneity at all. The standard non-parametric test is the Wooldridge control-function variant: fit a two-stage residual inclusion (2SRI) model, then test the significance of the first-stage residual in the second-stage outcome equation. If the residual coefficient is statistically significant, there is evidence of endogeneity; if not, the IV machinery may be correcting a problem the data does not detect <span class="citation" data-cites="terza2008twostage terza2018twostage wooldridge2015control">(<a href="references.html#ref-terza2008twostage" role="doc-biblioref">Terza et al. 2008</a>; <a href="references.html#ref-terza2018twostage" role="doc-biblioref">Terza 2018</a>; <a href="references.html#ref-wooldridge2015control" role="doc-biblioref">Wooldridge 2015</a>)</span>.</p>
+</section>
+<section id="data-and-setup" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-setup">Data and setup</h2>
+<p>2SRI replicates the RBVP on the same data using a probit second stage. The cluster bootstrap uses 500 replicates. Implementation is in <code>scripts/40_causal_main/42_two_stage_residual_inclusion.R</code> with bug fixes A6–A7 applied (cluster resampling + weights propagation through <code>glm()</code>’s non-standard evaluation).</p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>s2ri <span class="ot">&lt;-</span> <span class="fu">load_2sri_summary</span>()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make_2sri_table</span>(s2ri)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-2sri" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-2sri-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;10.1: 2SRI replication of the RBVP estimates and the Wooldridge-style endogeneity test. The residual-coefficient p-value tests for endogeneity in each treatment × wave cell.
+</figcaption>
+<div aria-describedby="tbl-2sri-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<caption>2SRI replication and Wooldridge-style endogeneity test. The residual coefficient’s p-value tests for endogeneity in the C-section / ANC treatment.</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Wave</th>
+<th style="text-align: left;">Treatment</th>
+<th style="text-align: right;">RBVP ATE (pp)</th>
+<th style="text-align: right;">2SRI ATE (pp)</th>
+<th style="text-align: center;">Sign consistent</th>
+<th style="text-align: right;">Resid p (endo test)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2004</td>
+<td style="text-align: left;">C-section</td>
+<td style="text-align: right;">+0.04</td>
+<td style="text-align: right;">-3.19</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: right;">0.195</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2004</td>
+<td style="text-align: left;">ANC 4+</td>
+<td style="text-align: right;">-0.02</td>
+<td style="text-align: right;">-0.16</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: right;">0.745</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2011</td>
+<td style="text-align: left;">C-section</td>
+<td style="text-align: right;">+0.56</td>
+<td style="text-align: right;">-2.48</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: right;">0.214</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2011</td>
+<td style="text-align: left;">ANC 4+</td>
+<td style="text-align: right;">-0.16</td>
+<td style="text-align: right;">-0.01</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: right;">0.973</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2017-2018</td>
+<td style="text-align: left;">C-section</td>
+<td style="text-align: right;">+1.14</td>
+<td style="text-align: right;">+1.12</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: right;">0.435</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2017-2018</td>
+<td style="text-align: left;">ANC 4+</td>
+<td style="text-align: right;">+0.41</td>
+<td style="text-align: right;">+1.72</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: right;">0.225</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">C-section</td>
+<td style="text-align: right;">-1.51</td>
+<td style="text-align: right;">-1.23</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: right;">0.978</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">ANC 4+</td>
+<td style="text-align: right;">-0.09</td>
+<td style="text-align: right;">-3.80</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: right;">0.035</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
+<p>Two patterns matter:</p>
+<ul>
+<li><strong>Sign-consistency.</strong> For C-section in 2017–18 and 2022, the 2SRI direction agrees with the RBVP direction. In 2004 and 2011, the RBVP returns positive while 2SRI returns negative — a sign flip across estimators. ANC is more stable across all waves.</li>
+<li><strong>The Wooldridge test.</strong> For <em>C-section in every wave</em>, the residual-coefficient p-value exceeds 0.19. The test cannot reject the null of exogeneity. Only the 2022 ANC cell shows endogeneity (p = 0.035).</li>
+</ul>
+<p>Read literally: the entire IV machinery in this manuscript was deployed to correct endogeneity that, for C-section, the data cannot detect.</p>
+<p>That is a substantive finding independent of any of the implementation bugs A1–A14: the residual coefficient comes from a non-bootstrap point estimation, and cluster-bootstrap fixes do not change it.</p>
+<p>For a causal interpretation of the RBVP’s 2022 result to be warranted, one needs to <em>also</em> claim that this Hausman-style test is underpowered against the relevant endogeneity. That is a defensible position; it is not a comfortable one. Either way, the Chapter-7 headline cannot be read alone.</p>
+</section>
+<section id="code" class="level2">
+<h2 class="anchored" data-anchor-id="code">Code</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>scripts/40_causal_main/42_two_stage_residual_inclusion.R — 2SRI + Hausman-style endogeneity test</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># SCRIPT: TWO-STAGE RESIDUAL INCLUSION (2SRI) ROBUSTNESS CHECK</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Purpose:  Triangulate primary RBVP results using 2SRI (Terza et al. 2008).</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#           2SRI is consistent for nonlinear models with endogenous binary</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#           regressors WITHOUT requiring distributional assumptions on the</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#           joint error structure. Sign-consistency with RBVP closes the</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#           key reviewer objection about parametric assumptions.</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Method:   Per Terza (2018) protocol for binary treatment, binary outcome:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   Stage 1: Probit(treatment | IV, X) → residuals v̂_i = y_i - Φ(x'β̂₁)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   Stage 2: Probit(outcome | treatment, X, v̂) → treatment coefficient is</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#            the 2SRI endogeneity-corrected structural estimate.</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   ATE:     Computed at v̂ = 0 (purging endogeneity component), averaged</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#            across all observations. Standard errors via bootstrap.</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Design:</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#   - Mirrors Script 3 data loading / control selection exactly</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   - Parallel sequential structure: Stage 1 = C-section, Stage 2 = ANC</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   - Stage 2 conditions on C-section (same as RBVP Stage 2)</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#   - Loads RBVP ATEs from existing CSVs for direct comparison</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># References:</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">#   Terza JV, Basu A, Rathouz PJ (2008). Two-stage residual inclusion</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">#     estimation. J Health Economics.</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#   Terza JV (2018). Two-stage residual inclusion in health services</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     research. Health Services Research.</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co">#   Wooldridge JM (2015). Control function methods in applied econometrics.</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">#     J Human Resources.</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Input:  data_step1_complete.rds, Recommended_Control_Sets.rds,</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#         Formal_ATE_Results.csv (RBVP baseline for comparison)</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: 5 CSV files</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Runtime: ~10-20 minutes (no GJRM, just probit)</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=============================================</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"2SRI ROBUSTNESS CHECK</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Two-Stage Residual Inclusion (Terza 2018)</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=============================================</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Directories — match Script 3 exactly</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>input_dir  <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">"outputs"</span>, <span class="st">"causal_main"</span>)</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">"outputs"</span>, <span class="st">"causal_main"</span>)</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(output_dir, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of bootstrap replications for SE estimation</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co"># 500 is standard per Terza (2018); increase to 1000 for final submission.</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Allow override via env var N_BOOT for smoke-testing (fix 2026-05-22).</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>N_BOOT <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">Sys.getenv</span>(<span class="st">"N_BOOT"</span>, <span class="st">"500"</span>))</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.na</span>(N_BOOT) <span class="sc">||</span> N_BOOT <span class="sc">&lt;</span> <span class="dv">1</span>) N_BOOT <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 1: LOAD DATA &amp; CONTROLS (identical to Script 3)</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"STEP 1: Loading data and controls</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"-----------------------------------</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>data_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(input_dir, <span class="st">"data_step1_complete.rds"</span>)</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(data_file)) {</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"data_step1_complete.rds not found. Run Script 1 first."</span>)</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>df_run <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(data_file)</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"✓ Data loaded: N ="</span>, <span class="fu">nrow</span>(df_run), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>controls_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(output_dir, <span class="st">"Recommended_Control_Sets.rds"</span>)</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(controls_file)) {</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  recommended_sets <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(controls_file)</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="st">"Consensus_With_Infrastructure"</span> <span class="sc">%in%</span> <span class="fu">names</span>(recommended_sets)) {</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    selected_controls <span class="ot">&lt;-</span> recommended_sets<span class="sc">$</span>Consensus_With_Infrastructure</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"✓ Controls: Consensus + Infrastructure override</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    selected_controls <span class="ot">&lt;-</span> recommended_sets<span class="sc">$</span>Consensus_Confounders</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"✓ Controls: Pure consensus</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  mediators <span class="ot">&lt;-</span> recommended_sets<span class="sc">$</span>Mediators</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fallback identical to Script 3</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>  selected_controls <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"birth_single"</span>, <span class="st">"contraceptive_type"</span>, <span class="st">"mother_education"</span>, <span class="st">"partner_edu"</span>,</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PBI"</span>, <span class="st">"BMI"</span>, <span class="st">"child_male"</span>, <span class="st">"infrastructure_index"</span>,</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    <span class="st">"birth_spacingaftermarriage"</span>, <span class="st">"media_exposure"</span>, <span class="st">"mother_ageBirth"</span>,</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mother_working"</span>, <span class="st">"pregnancy_terminated"</span>, <span class="st">"residence_urban"</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>  mediators <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"institutional_delivery"</span>, <span class="st">"baby_health_check_yes"</span>,</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"exclusive_bf_yes"</span>, <span class="st">"skilled_birth_attendant"</span>)</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"⚠ Using fallback control set</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="co"># Reconstruct year variable if needed</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"year"</span> <span class="sc">%in%</span> <span class="fu">names</span>(df_run)) {</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>  df_run<span class="sc">$</span>year <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    df_run<span class="sc">$</span>year_2011      <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"2011"</span>,</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>    df_run<span class="sc">$</span>year_2017_2018 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"2017-2018"</span>,</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    df_run<span class="sc">$</span>year_2022      <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"2022"</span>,</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"2004"</span></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 2: DATA PREPARATION (identical to Script 3)</span></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">STEP 2: Data preparation</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"-----------------------------------</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="co"># Mother education direction correction</span></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="st">"mother_education"</span> <span class="sc">%in%</span> <span class="fu">names</span>(df_run)) {</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>  cor_edu <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">as.numeric</span>(df_run<span class="sc">$</span>mother_education), df_run<span class="sc">$</span>child_died,</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>                 <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (cor_edu <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>    mx <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">as.numeric</span>(df_run<span class="sc">$</span>mother_education), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>    mn <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">as.numeric</span>(df_run<span class="sc">$</span>mother_education), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>    df_run<span class="sc">$</span>mother_education <span class="ot">&lt;-</span> (mx <span class="sc">+</span> mn) <span class="sc">-</span> <span class="fu">as.numeric</span>(df_run<span class="sc">$</span>mother_education)</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"✓ Mother education flipped (higher = more educated)</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="co"># Infrastructure PCA</span></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>infra_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"wealth"</span>, <span class="st">"sanitation"</span>, <span class="st">"housing_quality"</span>,</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>                <span class="st">"electricity_yes"</span>, <span class="st">"cooking_fuel"</span>)</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">all</span>(infra_cols <span class="sc">%in%</span> <span class="fu">names</span>(df_run))) {</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>  infra_mat <span class="ot">&lt;-</span> df_run[, infra_cols]</span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>  infra_mat[] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(infra_mat, <span class="cf">function</span>(x) <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(x)))</span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>  pca_res <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(<span class="fu">na.omit</span>(infra_mat), <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>  df_run<span class="sc">$</span>infrastructure_pca <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>  df_run<span class="sc">$</span>infrastructure_pca[<span class="fu">complete.cases</span>(infra_mat)] <span class="ot">&lt;-</span> pca_res<span class="sc">$</span>x[, <span class="dv">1</span>]</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>  cor_pca <span class="ot">&lt;-</span> <span class="fu">cor</span>(df_run<span class="sc">$</span>infrastructure_pca, df_run<span class="sc">$</span>child_died, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (cor_pca <span class="sc">&gt;</span> <span class="dv">0</span>) df_run<span class="sc">$</span>infrastructure_pca <span class="ot">&lt;-</span> <span class="sc">-</span>df_run<span class="sc">$</span>infrastructure_pca</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="st">"infrastructure_index"</span> <span class="sc">%in%</span> selected_controls) {</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>    selected_controls <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">setdiff</span>(selected_controls, <span class="st">"infrastructure_index"</span>),</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"infrastructure_pca"</span>)</span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"✓ Infrastructure PCA created</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 3: IV CREATION (identical to Script 3)</span></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">STEP 3: Instrument creation</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"-----------------------------------</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (var <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"c_section_yes"</span>, <span class="st">"anc_4plus"</span>)) {</span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>  iv_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"IV_"</span>, var)</span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>  df_run <span class="ot">&lt;-</span> df_run <span class="sc">%&gt;%</span></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(year, cluster_id) <span class="sc">%&gt;%</span></span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>      <span class="at">cluster_size =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>      <span class="at">cluster_sum  =</span> <span class="fu">sum</span>(<span class="sc">!!</span><span class="fu">sym</span>(var), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!!</span><span class="at">iv_name :=</span> <span class="fu">ifelse</span>(cluster_size <span class="sc">&gt;</span> <span class="dv">1</span>,</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>                          (cluster_sum <span class="sc">-</span> <span class="sc">!!</span><span class="fu">sym</span>(var)) <span class="sc">/</span> (cluster_size <span class="sc">-</span> <span class="dv">1</span>),</span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">NA</span>)</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>cluster_size, <span class="sc">-</span>cluster_sum)</span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"✓"</span>, iv_name, <span class="st">"created</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 4: CONTROL FINALISATION (identical to Script 3)</span></span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">STEP 4: Finalising control set</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"-----------------------------------</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a>available_regions <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">"^region_"</span>, <span class="fu">names</span>(df_run), <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>selected_controls <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">c</span>(selected_controls, available_regions))</span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a>final_controls    <span class="ot">&lt;-</span> selected_controls[selected_controls <span class="sc">%in%</span> <span class="fu">names</span>(df_run)]</span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"✓ Final controls: n ="</span>, <span class="fu">length</span>(final_controls), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"✓ Regional fixed effects: n ="</span>, <span class="fu">length</span>(available_regions), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable name aliases (consistent with Script 3)</span></span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a>outcome_var <span class="ot">&lt;-</span> <span class="st">"child_died"</span></span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a>endo_1      <span class="ot">&lt;-</span> <span class="st">"c_section_yes"</span></span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a>endo_2      <span class="ot">&lt;-</span> <span class="st">"anc_4plus"</span></span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a>iv_1        <span class="ot">&lt;-</span> <span class="st">"IV_c_section_yes"</span></span>
+<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a>iv_2        <span class="ot">&lt;-</span> <span class="st">"IV_anc_4plus"</span></span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a>years       <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2004"</span>, <span class="st">"2011"</span>, <span class="st">"2017-2018"</span>, <span class="st">"2022"</span>)</span>
+<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 5: HELPER FUNCTIONS</span></span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 5a. Compute generalised residuals from a fitted probit model ---</span></span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a><span class="co"># Per Terza (2008): raw residual v̂_i = y_i - Φ(x'β̂)</span></span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a><span class="co"># This is the standard "generalised residual" for the probit control function.</span></span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a>get_probit_residuals <span class="ot">&lt;-</span> <span class="cf">function</span>(fit_probit) {</span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a>  y       <span class="ot">&lt;-</span> fit_probit<span class="sc">$</span>y</span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a>  p_hat   <span class="ot">&lt;-</span> <span class="fu">fitted</span>(fit_probit)             <span class="co"># Φ(x'β̂), on probability scale</span></span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>  resid_v <span class="ot">&lt;-</span> y <span class="sc">-</span> p_hat                      <span class="co"># Raw residual</span></span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(resid_v)</span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 5b. Compute 2SRI ATE at v̂ = 0 ---</span></span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a><span class="co"># Per Terza (2018) Section 3: the structural ATE is evaluated by setting</span></span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a><span class="co"># the residual to its expected value (0), removing the endogeneity component.</span></span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a><span class="co"># ATE_i = Φ(lp_base_i + γ̂_v * 0 + α̂) - Φ(lp_base_i + γ̂_v * 0)</span></span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a><span class="co">#       = Φ(lp_base_i + α̂) - Φ(lp_base_i)</span></span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a><span class="co"># where lp_base_i is the linear predictor excluding both treatment and residual.</span></span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a><span class="co"># Arguments:</span></span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a><span class="co">#   fit_s2       : fitted stage-2 probit (with residual included)</span></span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a><span class="co">#   treatment_var: name of the treatment variable (e.g. "c_section_yes")</span></span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a><span class="co">#   resid_var    : name of the residual variable in the data</span></span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a><span class="co">#   data         : data frame used to fit stage-2</span></span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a>compute_2sri_ate <span class="ot">&lt;-</span> <span class="cf">function</span>(fit_s2, treatment_var, resid_var, data) {</span>
+<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a>  beta    <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit_s2)</span>
+<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a>  X_mat   <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(fit_s2)              <span class="co"># design matrix</span></span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Identify column positions</span></span>
+<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a>  trt_col   <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">colnames</span>(X_mat) <span class="sc">==</span> treatment_var)</span>
+<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a>  resid_col <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">colnames</span>(X_mat) <span class="sc">==</span> resid_var)</span>
+<span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(trt_col) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">paste</span>(<span class="st">"Treatment variable"</span>, treatment_var, <span class="st">"not found in model matrix"</span>))</span>
+<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(resid_col) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">paste</span>(<span class="st">"Residual variable"</span>, resid_var, <span class="st">"not found in model matrix"</span>))</span>
+<span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a>  alpha   <span class="ot">&lt;-</span> beta[trt_col]    <span class="co"># structural treatment coefficient</span></span>
+<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a>  gamma_v <span class="ot">&lt;-</span> beta[resid_col]  <span class="co"># residual coefficient (endogeneity correction)</span></span>
+<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a>  <span class="co"># lp_base: linear predictor with treatment=0 and residual=0</span></span>
+<span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a>  X_base       <span class="ot">&lt;-</span> X_mat</span>
+<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a>  X_base[, trt_col]   <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb2-231"><a href="#cb2-231" aria-hidden="true" tabindex="-1"></a>  X_base[, resid_col] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a>  lp_base <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(X_base <span class="sc">%*%</span> beta)</span>
+<span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-234"><a href="#cb2-234" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ATE_i = Φ(lp_base_i + α) - Φ(lp_base_i)</span></span>
+<span id="cb2-235"><a href="#cb2-235" aria-hidden="true" tabindex="-1"></a>  ate_i    <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(lp_base <span class="sc">+</span> alpha) <span class="sc">-</span> <span class="fu">pnorm</span>(lp_base)</span>
+<span id="cb2-236"><a href="#cb2-236" aria-hidden="true" tabindex="-1"></a>  ate_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(ate_i, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-237"><a href="#cb2-237" aria-hidden="true" tabindex="-1"></a>  ate_se   <span class="ot">&lt;-</span> <span class="fu">sd</span>(ate_i,   <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(ate_i)))</span>
+<span id="cb2-238"><a href="#cb2-238" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a>    <span class="at">ATE       =</span> ate_mean,</span>
+<span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a>    <span class="at">ATE_SE    =</span> ate_se,</span>
+<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a>    <span class="at">ATE_lower =</span> ate_mean <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> ate_se,</span>
+<span id="cb2-243"><a href="#cb2-243" aria-hidden="true" tabindex="-1"></a>    <span class="at">ATE_upper =</span> ate_mean <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> ate_se,</span>
+<span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha     =</span> alpha,   <span class="co"># structural coefficient (latent scale)</span></span>
+<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a>    <span class="at">gamma_v   =</span> gamma_v  <span class="co"># residual coefficient (test of endogeneity)</span></span>
+<span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 5c. Bootstrap standard errors for 2SRI ---</span></span>
+<span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstraps the ENTIRE two-stage procedure to obtain correct SEs.</span></span>
+<span id="cb2-251"><a href="#cb2-251" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignoring the two-step nature would understate uncertainty.</span></span>
+<span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a><span class="co"># Only applied to the ATE (not the latent coefficient, which is less</span></span>
+<span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a><span class="co"># interpretable as a marginal quantity).</span></span>
+<span id="cb2-254"><a href="#cb2-254" aria-hidden="true" tabindex="-1"></a>bootstrap_2sri_ate <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, f_stage1, f_stage2,</span>
+<span id="cb2-255"><a href="#cb2-255" aria-hidden="true" tabindex="-1"></a>                               treatment_var, resid_var,</span>
+<span id="cb2-256"><a href="#cb2-256" aria-hidden="true" tabindex="-1"></a>                               <span class="at">n_boot =</span> N_BOOT, <span class="at">seed =</span> <span class="dv">42</span>) {</span>
+<span id="cb2-257"><a href="#cb2-257" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─── FIX 2026-05-22 ─────────────────────────────────────────────────────────</span></span>
+<span id="cb2-258"><a href="#cb2-258" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Two bugs in original:</span></span>
+<span id="cb2-259"><a href="#cb2-259" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   (1) Observation-level bootstrap → underestimates SE for clustered DHS data.</span></span>
+<span id="cb2-260"><a href="#cb2-260" aria-hidden="true" tabindex="-1"></a>  <span class="co">#       Fix: cluster bootstrap (resample whole clusters).</span></span>
+<span id="cb2-261"><a href="#cb2-261" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   (2) glm() calls inside bootstrap loop dropped survey weights.</span></span>
+<span id="cb2-262"><a href="#cb2-262" aria-hidden="true" tabindex="-1"></a>  <span class="co">#       Fix: pass weights = dat_boot$weight to both glm calls.</span></span>
+<span id="cb2-263"><a href="#cb2-263" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Requires `dat` to have a `cluster_id` column (added by caller).</span></span>
+<span id="cb2-264"><a href="#cb2-264" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ────────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-265"><a href="#cb2-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(seed)</span>
+<span id="cb2-266"><a href="#cb2-266" aria-hidden="true" tabindex="-1"></a>  ate_boots <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_boot)</span>
+<span id="cb2-267"><a href="#cb2-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-268"><a href="#cb2-268" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="st">"cluster_id"</span> <span class="sc">%in%</span> <span class="fu">names</span>(dat)) {</span>
+<span id="cb2-269"><a href="#cb2-269" aria-hidden="true" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">"cluster_id missing from data; falling back to observation bootstrap"</span>)</span>
+<span id="cb2-270"><a href="#cb2-270" aria-hidden="true" tabindex="-1"></a>    use_cluster_boot <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb2-271"><a href="#cb2-271" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-272"><a href="#cb2-272" aria-hidden="true" tabindex="-1"></a>    use_cluster_boot <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb2-273"><a href="#cb2-273" aria-hidden="true" tabindex="-1"></a>    cluster_ids_local <span class="ot">&lt;-</span> <span class="fu">unique</span>(dat<span class="sc">$</span>cluster_id)</span>
+<span id="cb2-274"><a href="#cb2-274" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-275"><a href="#cb2-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-276"><a href="#cb2-276" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convert to plain data.frame ONCE outside loop — avoids tibble edge cases</span></span>
+<span id="cb2-277"><a href="#cb2-277" aria-hidden="true" tabindex="-1"></a>  <span class="co"># with do.call(rbind, ...) in the cluster bootstrap below.</span></span>
+<span id="cb2-278"><a href="#cb2-278" aria-hidden="true" tabindex="-1"></a>  dat_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dat)</span>
+<span id="cb2-279"><a href="#cb2-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-280"><a href="#cb2-280" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (b <span class="cf">in</span> <span class="fu">seq_len</span>(n_boot)) {</span>
+<span id="cb2-281"><a href="#cb2-281" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (use_cluster_boot) {</span>
+<span id="cb2-282"><a href="#cb2-282" aria-hidden="true" tabindex="-1"></a>      sampled_cl <span class="ot">&lt;-</span> <span class="fu">sample</span>(cluster_ids_local, <span class="fu">length</span>(cluster_ids_local), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-283"><a href="#cb2-283" aria-hidden="true" tabindex="-1"></a>      idx <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(sampled_cl, <span class="cf">function</span>(cl) <span class="fu">which</span>(dat_df<span class="sc">$</span>cluster_id <span class="sc">==</span> cl)))</span>
+<span id="cb2-284"><a href="#cb2-284" aria-hidden="true" tabindex="-1"></a>      dat_boot <span class="ot">&lt;-</span> dat_df[idx, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb2-285"><a href="#cb2-285" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb2-286"><a href="#cb2-286" aria-hidden="true" tabindex="-1"></a>      idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(dat_df), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-287"><a href="#cb2-287" aria-hidden="true" tabindex="-1"></a>      dat_boot <span class="ot">&lt;-</span> dat_df[idx, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb2-288"><a href="#cb2-288" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-289"><a href="#cb2-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-290"><a href="#cb2-290" aria-hidden="true" tabindex="-1"></a>    <span class="co"># FIX A13 (2026-05-22): glm() evaluates `weights = ...` via non-standard</span></span>
+<span id="cb2-291"><a href="#cb2-291" aria-hidden="true" tabindex="-1"></a>    <span class="co"># evaluation. Local variables (dat_boot$weight, w_boot) are not visible</span></span>
+<span id="cb2-292"><a href="#cb2-292" aria-hidden="true" tabindex="-1"></a>    <span class="co"># to glm's NSE inside a function call. But unquoted column names ARE</span></span>
+<span id="cb2-293"><a href="#cb2-293" aria-hidden="true" tabindex="-1"></a>    <span class="co"># visible because glm resolves them via `data` first. Since dat_boot has</span></span>
+<span id="cb2-294"><a href="#cb2-294" aria-hidden="true" tabindex="-1"></a>    <span class="co"># a "weight" column, we pass `weights = weight` unquoted.</span></span>
+<span id="cb2-295"><a href="#cb2-295" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Also reset row.names to avoid duplicate-row-name issues after cluster</span></span>
+<span id="cb2-296"><a href="#cb2-296" aria-hidden="true" tabindex="-1"></a>    <span class="co"># resampling.</span></span>
+<span id="cb2-297"><a href="#cb2-297" aria-hidden="true" tabindex="-1"></a>    <span class="fu">row.names</span>(dat_boot) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb2-298"><a href="#cb2-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-299"><a href="#cb2-299" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tryCatch</span>({</span>
+<span id="cb2-300"><a href="#cb2-300" aria-hidden="true" tabindex="-1"></a>      s1_boot  <span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(<span class="fu">glm</span>(f_stage1, <span class="at">data =</span> dat_boot,</span>
+<span id="cb2-301"><a href="#cb2-301" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">weights =</span> weight,</span>
+<span id="cb2-302"><a href="#cb2-302" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>),</span>
+<span id="cb2-303"><a href="#cb2-303" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">control =</span> <span class="fu">glm.control</span>(<span class="at">maxit =</span> <span class="dv">100</span>)))</span>
+<span id="cb2-304"><a href="#cb2-304" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Reject only on catastrophic divergence (Inf/NaN coefs), not on convergence warning</span></span>
+<span id="cb2-305"><a href="#cb2-305" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">any</span>(<span class="sc">!</span><span class="fu">is.finite</span>(<span class="fu">coef</span>(s1_boot)))) <span class="fu">stop</span>(<span class="st">"stage 1: non-finite coefficients"</span>)</span>
+<span id="cb2-306"><a href="#cb2-306" aria-hidden="true" tabindex="-1"></a>      dat_boot[[resid_var]] <span class="ot">&lt;-</span> dat_boot[[treatment_var]] <span class="sc">-</span> <span class="fu">fitted</span>(s1_boot)</span>
+<span id="cb2-307"><a href="#cb2-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-308"><a href="#cb2-308" aria-hidden="true" tabindex="-1"></a>      s2_boot  <span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(<span class="fu">glm</span>(f_stage2, <span class="at">data =</span> dat_boot,</span>
+<span id="cb2-309"><a href="#cb2-309" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">weights =</span> weight,</span>
+<span id="cb2-310"><a href="#cb2-310" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>),</span>
+<span id="cb2-311"><a href="#cb2-311" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">control =</span> <span class="fu">glm.control</span>(<span class="at">maxit =</span> <span class="dv">100</span>)))</span>
+<span id="cb2-312"><a href="#cb2-312" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">any</span>(<span class="sc">!</span><span class="fu">is.finite</span>(<span class="fu">coef</span>(s2_boot)))) <span class="fu">stop</span>(<span class="st">"stage 2: non-finite coefficients"</span>)</span>
+<span id="cb2-313"><a href="#cb2-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-314"><a href="#cb2-314" aria-hidden="true" tabindex="-1"></a>      ate_b    <span class="ot">&lt;-</span> <span class="fu">compute_2sri_ate</span>(s2_boot, treatment_var, resid_var, dat_boot)</span>
+<span id="cb2-315"><a href="#cb2-315" aria-hidden="true" tabindex="-1"></a>      ate_boots[b] <span class="ot">&lt;-</span> ate_b<span class="sc">$</span>ATE</span>
+<span id="cb2-316"><a href="#cb2-316" aria-hidden="true" tabindex="-1"></a>    }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb2-317"><a href="#cb2-317" aria-hidden="true" tabindex="-1"></a>      ate_boots[b] <span class="ot">&lt;&lt;-</span> <span class="cn">NA_real_</span></span>
+<span id="cb2-318"><a href="#cb2-318" aria-hidden="true" tabindex="-1"></a>      <span class="co"># log the first few errors for diagnosis</span></span>
+<span id="cb2-319"><a href="#cb2-319" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (b <span class="sc">&lt;=</span> <span class="dv">3</span>) <span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"  [boot err b=%d] %s"</span>, b, <span class="fu">conditionMessage</span>(e)))</span>
+<span id="cb2-320"><a href="#cb2-320" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb2-321"><a href="#cb2-321" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-322"><a href="#cb2-322" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-323"><a href="#cb2-323" aria-hidden="true" tabindex="-1"></a>  ate_boots <span class="ot">&lt;-</span> ate_boots[<span class="sc">!</span><span class="fu">is.na</span>(ate_boots)]</span>
+<span id="cb2-324"><a href="#cb2-324" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb2-325"><a href="#cb2-325" aria-hidden="true" tabindex="-1"></a>    <span class="at">boot_se    =</span> <span class="fu">sd</span>(ate_boots),</span>
+<span id="cb2-326"><a href="#cb2-326" aria-hidden="true" tabindex="-1"></a>    <span class="at">boot_lower =</span> <span class="fu">quantile</span>(ate_boots, <span class="fl">0.025</span>),</span>
+<span id="cb2-327"><a href="#cb2-327" aria-hidden="true" tabindex="-1"></a>    <span class="at">boot_upper =</span> <span class="fu">quantile</span>(ate_boots, <span class="fl">0.975</span>),</span>
+<span id="cb2-328"><a href="#cb2-328" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_success  =</span> <span class="fu">length</span>(ate_boots)</span>
+<span id="cb2-329"><a href="#cb2-329" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-330"><a href="#cb2-330" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-331"><a href="#cb2-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-332"><a href="#cb2-332" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-333"><a href="#cb2-333" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 6: LOAD RBVP BASELINE ATES FOR COMPARISON</span></span>
+<span id="cb2-334"><a href="#cb2-334" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-335"><a href="#cb2-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-336"><a href="#cb2-336" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"STEP 6: Loading RBVP baseline for comparison</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-337"><a href="#cb2-337" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"-----------------------------------</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-338"><a href="#cb2-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-339"><a href="#cb2-339" aria-hidden="true" tabindex="-1"></a>rbvp_ate_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(output_dir, <span class="st">"Formal_ATE_Results.csv"</span>)</span>
+<span id="cb2-340"><a href="#cb2-340" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(rbvp_ate_file)) {</span>
+<span id="cb2-341"><a href="#cb2-341" aria-hidden="true" tabindex="-1"></a>  rbvp_ates <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(rbvp_ate_file, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-342"><a href="#cb2-342" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"✓ Loaded Formal_ATE_Results.csv</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-343"><a href="#cb2-343" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb2-344"><a href="#cb2-344" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"⚠ Formal_ATE_Results.csv not found — RBVP comparison column will be NA</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-345"><a href="#cb2-345" aria-hidden="true" tabindex="-1"></a>  rbvp_ates <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Year =</span> years,</span>
+<span id="cb2-346"><a href="#cb2-346" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Csec_ATE =</span> <span class="cn">NA</span>, <span class="at">ANC_ATE =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-347"><a href="#cb2-347" aria-hidden="true" tabindex="-1"></a>                          <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-348"><a href="#cb2-348" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-349"><a href="#cb2-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-350"><a href="#cb2-350" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-351"><a href="#cb2-351" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 7: MAIN 2SRI ANALYSIS LOOP</span></span>
+<span id="cb2-352"><a href="#cb2-352" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-353"><a href="#cb2-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-354"><a href="#cb2-354" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">STEP 7: Running 2SRI models</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-355"><a href="#cb2-355" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">strrep</span>(<span class="st">"="</span>, <span class="dv">55</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-356"><a href="#cb2-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-357"><a href="#cb2-357" aria-hidden="true" tabindex="-1"></a><span class="co"># Output containers</span></span>
+<span id="cb2-358"><a href="#cb2-358" aria-hidden="true" tabindex="-1"></a>results_2sri       <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb2-359"><a href="#cb2-359" aria-hidden="true" tabindex="-1"></a>full_stage1_2sri   <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb2-360"><a href="#cb2-360" aria-hidden="true" tabindex="-1"></a>full_stage2_csec   <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb2-361"><a href="#cb2-361" aria-hidden="true" tabindex="-1"></a>full_stage2_anc    <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb2-362"><a href="#cb2-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-363"><a href="#cb2-363" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (yr <span class="cf">in</span> years) {</span>
+<span id="cb2-364"><a href="#cb2-364" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-365"><a href="#cb2-365" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">strrep</span>(<span class="st">"="</span>, <span class="dv">55</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-366"><a href="#cb2-366" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"YEAR:"</span>, yr, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-367"><a href="#cb2-367" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">strrep</span>(<span class="st">"="</span>, <span class="dv">55</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-368"><a href="#cb2-368" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-369"><a href="#cb2-369" aria-hidden="true" tabindex="-1"></a>  <span class="co"># --- Prepare data ---</span></span>
+<span id="cb2-370"><a href="#cb2-370" aria-hidden="true" tabindex="-1"></a>  <span class="co"># FIX 2026-05-22: include cluster_id so the bootstrap can do proper</span></span>
+<span id="cb2-371"><a href="#cb2-371" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cluster resampling (was previously missing → observation bootstrap).</span></span>
+<span id="cb2-372"><a href="#cb2-372" aria-hidden="true" tabindex="-1"></a>  dat_yr    <span class="ot">&lt;-</span> df_run <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> yr)</span>
+<span id="cb2-373"><a href="#cb2-373" aria-hidden="true" tabindex="-1"></a>  vars_need <span class="ot">&lt;-</span> <span class="fu">c</span>(outcome_var, endo_1, endo_2, iv_1, iv_2, final_controls,</span>
+<span id="cb2-374"><a href="#cb2-374" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"weight"</span>, <span class="st">"cluster_id"</span>)</span>
+<span id="cb2-375"><a href="#cb2-375" aria-hidden="true" tabindex="-1"></a>  dat_clean <span class="ot">&lt;-</span> dat_yr <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">all_of</span>(vars_need))</span>
+<span id="cb2-376"><a href="#cb2-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-377"><a href="#cb2-377" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (col <span class="cf">in</span> <span class="fu">setdiff</span>(<span class="fu">names</span>(dat_clean), <span class="fu">c</span>(<span class="st">"weight"</span>, <span class="st">"cluster_id"</span>))) {</span>
+<span id="cb2-378"><a href="#cb2-378" aria-hidden="true" tabindex="-1"></a>    dat_clean[[col]] <span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(<span class="fu">as.character</span>(dat_clean[[col]])))</span>
+<span id="cb2-379"><a href="#cb2-379" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-380"><a href="#cb2-380" aria-hidden="true" tabindex="-1"></a>  dat_clean <span class="ot">&lt;-</span> dat_clean <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">complete.cases</span>(.))</span>
+<span id="cb2-381"><a href="#cb2-381" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-382"><a href="#cb2-382" aria-hidden="true" tabindex="-1"></a>  N   <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dat_clean)</span>
+<span id="cb2-383"><a href="#cb2-383" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"N ="</span>, N, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-384"><a href="#cb2-384" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-385"><a href="#cb2-385" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (N <span class="sc">&lt;</span> <span class="dv">100</span>) {</span>
+<span id="cb2-386"><a href="#cb2-386" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"⚠ Insufficient data. Skipping.</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-387"><a href="#cb2-387" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
+<span id="cb2-388"><a href="#cb2-388" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-389"><a href="#cb2-389" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-390"><a href="#cb2-390" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-391"><a href="#cb2-391" aria-hidden="true" tabindex="-1"></a>  <span class="co"># STAGE 1: First-stage probit for C-section + ANC (diagnostic only)</span></span>
+<span id="cb2-392"><a href="#cb2-392" aria-hidden="true" tabindex="-1"></a>  <span class="co"># These are identical to Script 3's first-stage LPMs converted to probit.</span></span>
+<span id="cb2-393"><a href="#cb2-393" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-394"><a href="#cb2-394" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"--- Stage 1: First-stage probit diagnostics ---</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-395"><a href="#cb2-395" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-396"><a href="#cb2-396" aria-hidden="true" tabindex="-1"></a>  f_fs_csec <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(endo_1, <span class="st">"~"</span>, iv_1, <span class="st">"+"</span>,</span>
+<span id="cb2-397"><a href="#cb2-397" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">paste</span>(final_controls, <span class="at">collapse =</span> <span class="st">" + "</span>)))</span>
+<span id="cb2-398"><a href="#cb2-398" aria-hidden="true" tabindex="-1"></a>  f_fs_anc  <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(endo_2, <span class="st">"~"</span>, iv_2, <span class="st">"+"</span>,</span>
+<span id="cb2-399"><a href="#cb2-399" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">paste</span>(final_controls, <span class="at">collapse =</span> <span class="st">" + "</span>)))</span>
+<span id="cb2-400"><a href="#cb2-400" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-401"><a href="#cb2-401" aria-hidden="true" tabindex="-1"></a>  fs_csec <span class="ot">&lt;-</span> <span class="fu">glm</span>(f_fs_csec, <span class="at">data =</span> dat_clean, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>))</span>
+<span id="cb2-402"><a href="#cb2-402" aria-hidden="true" tabindex="-1"></a>  fs_anc  <span class="ot">&lt;-</span> <span class="fu">glm</span>(f_fs_anc,  <span class="at">data =</span> dat_clean, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>))</span>
+<span id="cb2-403"><a href="#cb2-403" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-404"><a href="#cb2-404" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Store full first-stage coefficients (for supplementary table)</span></span>
+<span id="cb2-405"><a href="#cb2-405" aria-hidden="true" tabindex="-1"></a>  fs_csec_summ <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(fs_csec))</span>
+<span id="cb2-406"><a href="#cb2-406" aria-hidden="true" tabindex="-1"></a>  full_stage1_2sri[[yr]] <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-407"><a href="#cb2-407" aria-hidden="true" tabindex="-1"></a>    <span class="at">Year     =</span> yr,</span>
+<span id="cb2-408"><a href="#cb2-408" aria-hidden="true" tabindex="-1"></a>    <span class="at">Stage    =</span> <span class="st">"Stage1_Csection"</span>,</span>
+<span id="cb2-409"><a href="#cb2-409" aria-hidden="true" tabindex="-1"></a>    <span class="at">Variable =</span> <span class="fu">rownames</span>(fs_csec_summ),</span>
+<span id="cb2-410"><a href="#cb2-410" aria-hidden="true" tabindex="-1"></a>    <span class="at">Coefficient =</span> fs_csec_summ[, <span class="st">"Estimate"</span>],</span>
+<span id="cb2-411"><a href="#cb2-411" aria-hidden="true" tabindex="-1"></a>    <span class="at">SE       =</span> fs_csec_summ[, <span class="st">"Std. Error"</span>],</span>
+<span id="cb2-412"><a href="#cb2-412" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z_value  =</span> fs_csec_summ[, <span class="st">"z value"</span>],</span>
+<span id="cb2-413"><a href="#cb2-413" aria-hidden="true" tabindex="-1"></a>    <span class="at">P_value  =</span> fs_csec_summ[, <span class="st">"Pr(&gt;|z|)"</span>],</span>
+<span id="cb2-414"><a href="#cb2-414" aria-hidden="true" tabindex="-1"></a>    <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb2-415"><a href="#cb2-415" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-416"><a href="#cb2-416" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-417"><a href="#cb2-417" aria-hidden="true" tabindex="-1"></a>  <span class="co"># IV coefficient (for reporting strength)</span></span>
+<span id="cb2-418"><a href="#cb2-418" aria-hidden="true" tabindex="-1"></a>  iv_csec_coef <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(fs_csec))[iv_1, <span class="st">"Estimate"</span>]</span>
+<span id="cb2-419"><a href="#cb2-419" aria-hidden="true" tabindex="-1"></a>  iv_csec_p    <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(fs_csec))[iv_1, <span class="st">"Pr(&gt;|z|)"</span>]</span>
+<span id="cb2-420"><a href="#cb2-420" aria-hidden="true" tabindex="-1"></a>  iv_anc_coef  <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(fs_anc)) [iv_2, <span class="st">"Estimate"</span>]</span>
+<span id="cb2-421"><a href="#cb2-421" aria-hidden="true" tabindex="-1"></a>  iv_anc_p     <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(fs_anc)) [iv_2, <span class="st">"Pr(&gt;|z|)"</span>]</span>
+<span id="cb2-422"><a href="#cb2-422" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-423"><a href="#cb2-423" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  C-section IV coef:"</span>, <span class="fu">round</span>(iv_csec_coef, <span class="dv">4</span>),</span>
+<span id="cb2-424"><a href="#cb2-424" aria-hidden="true" tabindex="-1"></a>      <span class="st">"(p ="</span>, <span class="fu">format.pval</span>(iv_csec_p, <span class="at">digits =</span> <span class="dv">3</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-425"><a href="#cb2-425" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  ANC IV coef:"</span>, <span class="fu">round</span>(iv_anc_coef, <span class="dv">4</span>),</span>
+<span id="cb2-426"><a href="#cb2-426" aria-hidden="true" tabindex="-1"></a>      <span class="st">"(p ="</span>, <span class="fu">format.pval</span>(iv_anc_p, <span class="at">digits =</span> <span class="dv">3</span>), <span class="st">")</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-427"><a href="#cb2-427" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-428"><a href="#cb2-428" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-429"><a href="#cb2-429" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2SRI STAGE 1 (C-section): Second-stage probit for C-section → mortality</span></span>
+<span id="cb2-430"><a href="#cb2-430" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-431"><a href="#cb2-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"--- 2SRI Stage 1: C-section → Mortality ---</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-432"><a href="#cb2-432" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-433"><a href="#cb2-433" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate residuals from C-section first-stage probit</span></span>
+<span id="cb2-434"><a href="#cb2-434" aria-hidden="true" tabindex="-1"></a>  dat_clean[[<span class="st">"resid_csec"</span>]] <span class="ot">&lt;-</span> <span class="fu">get_probit_residuals</span>(fs_csec)</span>
+<span id="cb2-435"><a href="#cb2-435" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-436"><a href="#cb2-436" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Second-stage probit: outcome ~ csec + controls + resid_csec</span></span>
+<span id="cb2-437"><a href="#cb2-437" aria-hidden="true" tabindex="-1"></a>  f_2sri_csec_s2 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(</span>
+<span id="cb2-438"><a href="#cb2-438" aria-hidden="true" tabindex="-1"></a>    outcome_var, <span class="st">"~"</span>, endo_1, <span class="st">"+"</span>,</span>
+<span id="cb2-439"><a href="#cb2-439" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(final_controls, <span class="at">collapse =</span> <span class="st">" + "</span>),</span>
+<span id="cb2-440"><a href="#cb2-440" aria-hidden="true" tabindex="-1"></a>    <span class="st">"+ resid_csec"</span></span>
+<span id="cb2-441"><a href="#cb2-441" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb2-442"><a href="#cb2-442" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-443"><a href="#cb2-443" aria-hidden="true" tabindex="-1"></a>  fit_2sri_csec <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb2-444"><a href="#cb2-444" aria-hidden="true" tabindex="-1"></a>    <span class="fu">glm</span>(f_2sri_csec_s2, <span class="at">data =</span> dat_clean, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>)),</span>
+<span id="cb2-445"><a href="#cb2-445" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb2-446"><a href="#cb2-446" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">"  ✗ 2SRI C-section stage 2 failed:"</span>, e<span class="sc">$</span>message, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-447"><a href="#cb2-447" aria-hidden="true" tabindex="-1"></a>      <span class="cn">NULL</span></span>
+<span id="cb2-448"><a href="#cb2-448" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-449"><a href="#cb2-449" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-450"><a href="#cb2-450" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-451"><a href="#cb2-451" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(fit_2sri_csec)) {</span>
+<span id="cb2-452"><a href="#cb2-452" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Skipping C-section 2SRI for this year.</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-453"><a href="#cb2-453" aria-hidden="true" tabindex="-1"></a>    ate_csec_2sri <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">ATE =</span> <span class="cn">NA</span>, <span class="at">ATE_SE =</span> <span class="cn">NA</span>, <span class="at">ATE_lower =</span> <span class="cn">NA</span>, <span class="at">ATE_upper =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-454"><a href="#cb2-454" aria-hidden="true" tabindex="-1"></a>                          <span class="at">alpha =</span> <span class="cn">NA</span>, <span class="at">gamma_v =</span> <span class="cn">NA</span>)</span>
+<span id="cb2-455"><a href="#cb2-455" aria-hidden="true" tabindex="-1"></a>    boot_csec     <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">boot_se =</span> <span class="cn">NA</span>, <span class="at">boot_lower =</span> <span class="cn">NA</span>, <span class="at">boot_upper =</span> <span class="cn">NA</span>, <span class="at">n_success =</span> <span class="dv">0</span>)</span>
+<span id="cb2-456"><a href="#cb2-456" aria-hidden="true" tabindex="-1"></a>    csec_2sri_coef <span class="ot">&lt;-</span> <span class="cn">NA</span>; csec_2sri_se <span class="ot">&lt;-</span> <span class="cn">NA</span>; csec_2sri_p <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb2-457"><a href="#cb2-457" aria-hidden="true" tabindex="-1"></a>    resid_csec_coef <span class="ot">&lt;-</span> <span class="cn">NA</span>; resid_csec_p <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb2-458"><a href="#cb2-458" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-459"><a href="#cb2-459" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute ATE at v̂ = 0</span></span>
+<span id="cb2-460"><a href="#cb2-460" aria-hidden="true" tabindex="-1"></a>    ate_csec_2sri <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb2-461"><a href="#cb2-461" aria-hidden="true" tabindex="-1"></a>      <span class="fu">compute_2sri_ate</span>(fit_2sri_csec, endo_1, <span class="st">"resid_csec"</span>, dat_clean),</span>
+<span id="cb2-462"><a href="#cb2-462" aria-hidden="true" tabindex="-1"></a>      <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb2-463"><a href="#cb2-463" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">"  ⚠ ATE computation failed:"</span>, e<span class="sc">$</span>message, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-464"><a href="#cb2-464" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">ATE =</span> <span class="cn">NA</span>, <span class="at">ATE_SE =</span> <span class="cn">NA</span>, <span class="at">ATE_lower =</span> <span class="cn">NA</span>, <span class="at">ATE_upper =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-465"><a href="#cb2-465" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="cn">NA</span>, <span class="at">gamma_v =</span> <span class="cn">NA</span>)</span>
+<span id="cb2-466"><a href="#cb2-466" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-467"><a href="#cb2-467" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-468"><a href="#cb2-468" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-469"><a href="#cb2-469" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Bootstrap SEs</span></span>
+<span id="cb2-470"><a href="#cb2-470" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Bootstrapping SEs ("</span>, N_BOOT, <span class="st">"reps)...</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-471"><a href="#cb2-471" aria-hidden="true" tabindex="-1"></a>    boot_csec <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb2-472"><a href="#cb2-472" aria-hidden="true" tabindex="-1"></a>      <span class="fu">bootstrap_2sri_ate</span>(dat_clean, f_fs_csec, f_2sri_csec_s2,</span>
+<span id="cb2-473"><a href="#cb2-473" aria-hidden="true" tabindex="-1"></a>                         endo_1, <span class="st">"resid_csec"</span>),</span>
+<span id="cb2-474"><a href="#cb2-474" aria-hidden="true" tabindex="-1"></a>      <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb2-475"><a href="#cb2-475" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">"  ⚠ Bootstrap failed:"</span>, e<span class="sc">$</span>message, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-476"><a href="#cb2-476" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">boot_se =</span> <span class="cn">NA</span>, <span class="at">boot_lower =</span> <span class="cn">NA</span>, <span class="at">boot_upper =</span> <span class="cn">NA</span>, <span class="at">n_success =</span> <span class="dv">0</span>)</span>
+<span id="cb2-477"><a href="#cb2-477" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-478"><a href="#cb2-478" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-479"><a href="#cb2-479" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-480"><a href="#cb2-480" aria-hidden="true" tabindex="-1"></a>    csec_s2_summ   <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(fit_2sri_csec))</span>
+<span id="cb2-481"><a href="#cb2-481" aria-hidden="true" tabindex="-1"></a>    csec_2sri_coef <span class="ot">&lt;-</span> csec_s2_summ[endo_1,      <span class="st">"Estimate"</span>]</span>
+<span id="cb2-482"><a href="#cb2-482" aria-hidden="true" tabindex="-1"></a>    csec_2sri_se   <span class="ot">&lt;-</span> csec_s2_summ[endo_1,      <span class="st">"Std. Error"</span>]</span>
+<span id="cb2-483"><a href="#cb2-483" aria-hidden="true" tabindex="-1"></a>    csec_2sri_p    <span class="ot">&lt;-</span> csec_s2_summ[endo_1,      <span class="st">"Pr(&gt;|z|)"</span>]</span>
+<span id="cb2-484"><a href="#cb2-484" aria-hidden="true" tabindex="-1"></a>    resid_csec_coef <span class="ot">&lt;-</span> csec_s2_summ[<span class="st">"resid_csec"</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb2-485"><a href="#cb2-485" aria-hidden="true" tabindex="-1"></a>    resid_csec_p    <span class="ot">&lt;-</span> csec_s2_summ[<span class="st">"resid_csec"</span>, <span class="st">"Pr(&gt;|z|)"</span>]</span>
+<span id="cb2-486"><a href="#cb2-486" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-487"><a href="#cb2-487" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  ✓ C-section 2SRI coef:"</span>, <span class="fu">round</span>(csec_2sri_coef, <span class="dv">4</span>),</span>
+<span id="cb2-488"><a href="#cb2-488" aria-hidden="true" tabindex="-1"></a>        <span class="st">"(p ="</span>, <span class="fu">format.pval</span>(csec_2sri_p, <span class="at">digits =</span> <span class="dv">3</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-489"><a href="#cb2-489" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  ✓ Residual coef (endogeneity test):"</span>, <span class="fu">round</span>(resid_csec_coef, <span class="dv">4</span>),</span>
+<span id="cb2-490"><a href="#cb2-490" aria-hidden="true" tabindex="-1"></a>        <span class="st">"(p ="</span>, <span class="fu">format.pval</span>(resid_csec_p, <span class="at">digits =</span> <span class="dv">3</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-491"><a href="#cb2-491" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  ✓ 2SRI ATE ="</span>, <span class="fu">round</span>(ate_csec_2sri<span class="sc">$</span>ATE <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">4</span>), <span class="st">"pp"</span>,</span>
+<span id="cb2-492"><a href="#cb2-492" aria-hidden="true" tabindex="-1"></a>        <span class="st">"["</span>, <span class="fu">round</span>(boot_csec<span class="sc">$</span>boot_lower <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">4</span>), <span class="st">","</span>,</span>
+<span id="cb2-493"><a href="#cb2-493" aria-hidden="true" tabindex="-1"></a>        <span class="fu">round</span>(boot_csec<span class="sc">$</span>boot_upper <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">4</span>), <span class="st">"] (bootstrap 95% CI)</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-494"><a href="#cb2-494" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-495"><a href="#cb2-495" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store full stage-2 coefficients</span></span>
+<span id="cb2-496"><a href="#cb2-496" aria-hidden="true" tabindex="-1"></a>    full_stage2_csec[[yr]] <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-497"><a href="#cb2-497" aria-hidden="true" tabindex="-1"></a>      <span class="at">Year        =</span> yr,</span>
+<span id="cb2-498"><a href="#cb2-498" aria-hidden="true" tabindex="-1"></a>      <span class="at">Stage       =</span> <span class="st">"2SRI_Stage1_Csection"</span>,</span>
+<span id="cb2-499"><a href="#cb2-499" aria-hidden="true" tabindex="-1"></a>      <span class="at">Variable    =</span> <span class="fu">rownames</span>(csec_s2_summ),</span>
+<span id="cb2-500"><a href="#cb2-500" aria-hidden="true" tabindex="-1"></a>      <span class="at">Coefficient =</span> csec_s2_summ[, <span class="st">"Estimate"</span>],</span>
+<span id="cb2-501"><a href="#cb2-501" aria-hidden="true" tabindex="-1"></a>      <span class="at">SE          =</span> csec_s2_summ[, <span class="st">"Std. Error"</span>],</span>
+<span id="cb2-502"><a href="#cb2-502" aria-hidden="true" tabindex="-1"></a>      <span class="at">Z_value     =</span> csec_s2_summ[, <span class="st">"z value"</span>],</span>
+<span id="cb2-503"><a href="#cb2-503" aria-hidden="true" tabindex="-1"></a>      <span class="at">P_value     =</span> csec_s2_summ[, <span class="st">"Pr(&gt;|z|)"</span>],</span>
+<span id="cb2-504"><a href="#cb2-504" aria-hidden="true" tabindex="-1"></a>      <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb2-505"><a href="#cb2-505" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-506"><a href="#cb2-506" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-507"><a href="#cb2-507" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-508"><a href="#cb2-508" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-509"><a href="#cb2-509" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2SRI STAGE 2 (ANC): Second-stage probit for ANC → mortality</span></span>
+<span id="cb2-510"><a href="#cb2-510" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Conditions on C-section status, matching RBVP Stage 2 structure.</span></span>
+<span id="cb2-511"><a href="#cb2-511" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-512"><a href="#cb2-512" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"--- 2SRI Stage 2: ANC → Mortality (conditioning on C-section) ---</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-513"><a href="#cb2-513" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-514"><a href="#cb2-514" aria-hidden="true" tabindex="-1"></a>  <span class="co"># First-stage probit for ANC (already have fs_anc from above)</span></span>
+<span id="cb2-515"><a href="#cb2-515" aria-hidden="true" tabindex="-1"></a>  dat_clean[[<span class="st">"resid_anc"</span>]] <span class="ot">&lt;-</span> <span class="fu">get_probit_residuals</span>(fs_anc)</span>
+<span id="cb2-516"><a href="#cb2-516" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-517"><a href="#cb2-517" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Second-stage probit: outcome ~ anc + csec + controls + resid_anc</span></span>
+<span id="cb2-518"><a href="#cb2-518" aria-hidden="true" tabindex="-1"></a>  f_2sri_anc_s2 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(</span>
+<span id="cb2-519"><a href="#cb2-519" aria-hidden="true" tabindex="-1"></a>    outcome_var, <span class="st">"~"</span>, endo_2, <span class="st">"+"</span>, endo_1, <span class="st">"+"</span>,</span>
+<span id="cb2-520"><a href="#cb2-520" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(final_controls, <span class="at">collapse =</span> <span class="st">" + "</span>),</span>
+<span id="cb2-521"><a href="#cb2-521" aria-hidden="true" tabindex="-1"></a>    <span class="st">"+ resid_anc"</span></span>
+<span id="cb2-522"><a href="#cb2-522" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb2-523"><a href="#cb2-523" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-524"><a href="#cb2-524" aria-hidden="true" tabindex="-1"></a>  fit_2sri_anc <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb2-525"><a href="#cb2-525" aria-hidden="true" tabindex="-1"></a>    <span class="fu">glm</span>(f_2sri_anc_s2, <span class="at">data =</span> dat_clean, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>)),</span>
+<span id="cb2-526"><a href="#cb2-526" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb2-527"><a href="#cb2-527" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">"  ✗ 2SRI ANC stage 2 failed:"</span>, e<span class="sc">$</span>message, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-528"><a href="#cb2-528" aria-hidden="true" tabindex="-1"></a>      <span class="cn">NULL</span></span>
+<span id="cb2-529"><a href="#cb2-529" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-530"><a href="#cb2-530" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-531"><a href="#cb2-531" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-532"><a href="#cb2-532" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(fit_2sri_anc)) {</span>
+<span id="cb2-533"><a href="#cb2-533" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Skipping ANC 2SRI for this year.</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-534"><a href="#cb2-534" aria-hidden="true" tabindex="-1"></a>    ate_anc_2sri   <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">ATE =</span> <span class="cn">NA</span>, <span class="at">ATE_SE =</span> <span class="cn">NA</span>, <span class="at">ATE_lower =</span> <span class="cn">NA</span>, <span class="at">ATE_upper =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-535"><a href="#cb2-535" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="cn">NA</span>, <span class="at">gamma_v =</span> <span class="cn">NA</span>)</span>
+<span id="cb2-536"><a href="#cb2-536" aria-hidden="true" tabindex="-1"></a>    boot_anc       <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">boot_se =</span> <span class="cn">NA</span>, <span class="at">boot_lower =</span> <span class="cn">NA</span>, <span class="at">boot_upper =</span> <span class="cn">NA</span>, <span class="at">n_success =</span> <span class="dv">0</span>)</span>
+<span id="cb2-537"><a href="#cb2-537" aria-hidden="true" tabindex="-1"></a>    anc_2sri_coef  <span class="ot">&lt;-</span> <span class="cn">NA</span>; anc_2sri_se <span class="ot">&lt;-</span> <span class="cn">NA</span>; anc_2sri_p <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb2-538"><a href="#cb2-538" aria-hidden="true" tabindex="-1"></a>    resid_anc_coef <span class="ot">&lt;-</span> <span class="cn">NA</span>; resid_anc_p <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb2-539"><a href="#cb2-539" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-540"><a href="#cb2-540" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ATE at v̂ = 0</span></span>
+<span id="cb2-541"><a href="#cb2-541" aria-hidden="true" tabindex="-1"></a>    ate_anc_2sri <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb2-542"><a href="#cb2-542" aria-hidden="true" tabindex="-1"></a>      <span class="fu">compute_2sri_ate</span>(fit_2sri_anc, endo_2, <span class="st">"resid_anc"</span>, dat_clean),</span>
+<span id="cb2-543"><a href="#cb2-543" aria-hidden="true" tabindex="-1"></a>      <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb2-544"><a href="#cb2-544" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">"  ⚠ ATE computation failed:"</span>, e<span class="sc">$</span>message, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-545"><a href="#cb2-545" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">ATE =</span> <span class="cn">NA</span>, <span class="at">ATE_SE =</span> <span class="cn">NA</span>, <span class="at">ATE_lower =</span> <span class="cn">NA</span>, <span class="at">ATE_upper =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-546"><a href="#cb2-546" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="cn">NA</span>, <span class="at">gamma_v =</span> <span class="cn">NA</span>)</span>
+<span id="cb2-547"><a href="#cb2-547" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-548"><a href="#cb2-548" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-549"><a href="#cb2-549" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-550"><a href="#cb2-550" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Bootstrap SEs</span></span>
+<span id="cb2-551"><a href="#cb2-551" aria-hidden="true" tabindex="-1"></a>    <span class="co"># For Stage 2 we need the first stage for ANC only (csec already in data)</span></span>
+<span id="cb2-552"><a href="#cb2-552" aria-hidden="true" tabindex="-1"></a>    f_fs_anc_stage2 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(endo_2, <span class="st">"~"</span>, iv_2, <span class="st">"+"</span>, endo_1, <span class="st">"+"</span>,</span>
+<span id="cb2-553"><a href="#cb2-553" aria-hidden="true" tabindex="-1"></a>                                        <span class="fu">paste</span>(final_controls, <span class="at">collapse =</span> <span class="st">" + "</span>)))</span>
+<span id="cb2-554"><a href="#cb2-554" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  Bootstrapping SEs ("</span>, N_BOOT, <span class="st">"reps)...</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-555"><a href="#cb2-555" aria-hidden="true" tabindex="-1"></a>    boot_anc <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb2-556"><a href="#cb2-556" aria-hidden="true" tabindex="-1"></a>      <span class="fu">bootstrap_2sri_ate</span>(dat_clean, f_fs_anc_stage2, f_2sri_anc_s2,</span>
+<span id="cb2-557"><a href="#cb2-557" aria-hidden="true" tabindex="-1"></a>                         endo_2, <span class="st">"resid_anc"</span>),</span>
+<span id="cb2-558"><a href="#cb2-558" aria-hidden="true" tabindex="-1"></a>      <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb2-559"><a href="#cb2-559" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">"  ⚠ Bootstrap failed:"</span>, e<span class="sc">$</span>message, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-560"><a href="#cb2-560" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">boot_se =</span> <span class="cn">NA</span>, <span class="at">boot_lower =</span> <span class="cn">NA</span>, <span class="at">boot_upper =</span> <span class="cn">NA</span>, <span class="at">n_success =</span> <span class="dv">0</span>)</span>
+<span id="cb2-561"><a href="#cb2-561" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-562"><a href="#cb2-562" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-563"><a href="#cb2-563" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-564"><a href="#cb2-564" aria-hidden="true" tabindex="-1"></a>    anc_s2_summ    <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(fit_2sri_anc))</span>
+<span id="cb2-565"><a href="#cb2-565" aria-hidden="true" tabindex="-1"></a>    anc_2sri_coef  <span class="ot">&lt;-</span> anc_s2_summ[endo_2,     <span class="st">"Estimate"</span>]</span>
+<span id="cb2-566"><a href="#cb2-566" aria-hidden="true" tabindex="-1"></a>    anc_2sri_se    <span class="ot">&lt;-</span> anc_s2_summ[endo_2,     <span class="st">"Std. Error"</span>]</span>
+<span id="cb2-567"><a href="#cb2-567" aria-hidden="true" tabindex="-1"></a>    anc_2sri_p     <span class="ot">&lt;-</span> anc_s2_summ[endo_2,     <span class="st">"Pr(&gt;|z|)"</span>]</span>
+<span id="cb2-568"><a href="#cb2-568" aria-hidden="true" tabindex="-1"></a>    resid_anc_coef <span class="ot">&lt;-</span> anc_s2_summ[<span class="st">"resid_anc"</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb2-569"><a href="#cb2-569" aria-hidden="true" tabindex="-1"></a>    resid_anc_p    <span class="ot">&lt;-</span> anc_s2_summ[<span class="st">"resid_anc"</span>, <span class="st">"Pr(&gt;|z|)"</span>]</span>
+<span id="cb2-570"><a href="#cb2-570" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-571"><a href="#cb2-571" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  ✓ ANC 2SRI coef:"</span>, <span class="fu">round</span>(anc_2sri_coef, <span class="dv">4</span>),</span>
+<span id="cb2-572"><a href="#cb2-572" aria-hidden="true" tabindex="-1"></a>        <span class="st">"(p ="</span>, <span class="fu">format.pval</span>(anc_2sri_p, <span class="at">digits =</span> <span class="dv">3</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-573"><a href="#cb2-573" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  ✓ Residual coef (endogeneity test):"</span>, <span class="fu">round</span>(resid_anc_coef, <span class="dv">4</span>),</span>
+<span id="cb2-574"><a href="#cb2-574" aria-hidden="true" tabindex="-1"></a>        <span class="st">"(p ="</span>, <span class="fu">format.pval</span>(resid_anc_p, <span class="at">digits =</span> <span class="dv">3</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-575"><a href="#cb2-575" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"  ✓ 2SRI ATE ="</span>, <span class="fu">round</span>(ate_anc_2sri<span class="sc">$</span>ATE <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">4</span>), <span class="st">"pp"</span>,</span>
+<span id="cb2-576"><a href="#cb2-576" aria-hidden="true" tabindex="-1"></a>        <span class="st">"["</span>, <span class="fu">round</span>(boot_anc<span class="sc">$</span>boot_lower <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">4</span>), <span class="st">","</span>,</span>
+<span id="cb2-577"><a href="#cb2-577" aria-hidden="true" tabindex="-1"></a>        <span class="fu">round</span>(boot_anc<span class="sc">$</span>boot_upper <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">4</span>), <span class="st">"] (bootstrap 95% CI)</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-578"><a href="#cb2-578" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-579"><a href="#cb2-579" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store full stage-2 coefficients</span></span>
+<span id="cb2-580"><a href="#cb2-580" aria-hidden="true" tabindex="-1"></a>    full_stage2_anc[[yr]] <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-581"><a href="#cb2-581" aria-hidden="true" tabindex="-1"></a>      <span class="at">Year        =</span> yr,</span>
+<span id="cb2-582"><a href="#cb2-582" aria-hidden="true" tabindex="-1"></a>      <span class="at">Stage       =</span> <span class="st">"2SRI_Stage2_ANC"</span>,</span>
+<span id="cb2-583"><a href="#cb2-583" aria-hidden="true" tabindex="-1"></a>      <span class="at">Variable    =</span> <span class="fu">rownames</span>(anc_s2_summ),</span>
+<span id="cb2-584"><a href="#cb2-584" aria-hidden="true" tabindex="-1"></a>      <span class="at">Coefficient =</span> anc_s2_summ[, <span class="st">"Estimate"</span>],</span>
+<span id="cb2-585"><a href="#cb2-585" aria-hidden="true" tabindex="-1"></a>      <span class="at">SE          =</span> anc_s2_summ[, <span class="st">"Std. Error"</span>],</span>
+<span id="cb2-586"><a href="#cb2-586" aria-hidden="true" tabindex="-1"></a>      <span class="at">Z_value     =</span> anc_s2_summ[, <span class="st">"z value"</span>],</span>
+<span id="cb2-587"><a href="#cb2-587" aria-hidden="true" tabindex="-1"></a>      <span class="at">P_value     =</span> anc_s2_summ[, <span class="st">"Pr(&gt;|z|)"</span>],</span>
+<span id="cb2-588"><a href="#cb2-588" aria-hidden="true" tabindex="-1"></a>      <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb2-589"><a href="#cb2-589" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-590"><a href="#cb2-590" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-591"><a href="#cb2-591" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-592"><a href="#cb2-592" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-593"><a href="#cb2-593" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Retrieve RBVP ATEs for comparison</span></span>
+<span id="cb2-594"><a href="#cb2-594" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-595"><a href="#cb2-595" aria-hidden="true" tabindex="-1"></a>  rbvp_row      <span class="ot">&lt;-</span> rbvp_ates <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">==</span> yr)</span>
+<span id="cb2-596"><a href="#cb2-596" aria-hidden="true" tabindex="-1"></a>  rbvp_csec_ate <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">nrow</span>(rbvp_row) <span class="sc">&gt;</span> <span class="dv">0</span>) rbvp_row<span class="sc">$</span>Csec_ATE[<span class="dv">1</span>] <span class="cf">else</span> <span class="cn">NA</span></span>
+<span id="cb2-597"><a href="#cb2-597" aria-hidden="true" tabindex="-1"></a>  rbvp_anc_ate  <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">nrow</span>(rbvp_row) <span class="sc">&gt;</span> <span class="dv">0</span>) rbvp_row<span class="sc">$</span>ANC_ATE[<span class="dv">1</span>]  <span class="cf">else</span> <span class="cn">NA</span></span>
+<span id="cb2-598"><a href="#cb2-598" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-599"><a href="#cb2-599" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-600"><a href="#cb2-600" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sign consistency check</span></span>
+<span id="cb2-601"><a href="#cb2-601" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-602"><a href="#cb2-602" aria-hidden="true" tabindex="-1"></a>  csec_sign_ok <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(ate_csec_2sri<span class="sc">$</span>ATE) <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(rbvp_csec_ate) <span class="sc">&amp;&amp;</span></span>
+<span id="cb2-603"><a href="#cb2-603" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">sign</span>(ate_csec_2sri<span class="sc">$</span>ATE) <span class="sc">==</span> <span class="fu">sign</span>(rbvp_csec_ate))</span>
+<span id="cb2-604"><a href="#cb2-604" aria-hidden="true" tabindex="-1"></a>  anc_sign_ok  <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(ate_anc_2sri<span class="sc">$</span>ATE)  <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(rbvp_anc_ate)  <span class="sc">&amp;&amp;</span></span>
+<span id="cb2-605"><a href="#cb2-605" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">sign</span>(ate_anc_2sri<span class="sc">$</span>ATE)  <span class="sc">==</span> <span class="fu">sign</span>(rbvp_anc_ate))</span>
+<span id="cb2-606"><a href="#cb2-606" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-607"><a href="#cb2-607" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-608"><a href="#cb2-608" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Collect results row</span></span>
+<span id="cb2-609"><a href="#cb2-609" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-610"><a href="#cb2-610" aria-hidden="true" tabindex="-1"></a>  results_2sri <span class="ot">&lt;-</span> <span class="fu">rbind</span>(results_2sri, <span class="fu">data.frame</span>(</span>
+<span id="cb2-611"><a href="#cb2-611" aria-hidden="true" tabindex="-1"></a>    <span class="at">Year =</span> yr,</span>
+<span id="cb2-612"><a href="#cb2-612" aria-hidden="true" tabindex="-1"></a>    <span class="at">N    =</span> N,</span>
+<span id="cb2-613"><a href="#cb2-613" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-614"><a href="#cb2-614" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ── C-section ──────────────────────────────────────────────────────────</span></span>
+<span id="cb2-615"><a href="#cb2-615" aria-hidden="true" tabindex="-1"></a>    <span class="at">Csec_RBVP_ATE            =</span> rbvp_csec_ate,</span>
+<span id="cb2-616"><a href="#cb2-616" aria-hidden="true" tabindex="-1"></a>    <span class="at">Csec_2SRI_Coef           =</span> csec_2sri_coef,</span>
+<span id="cb2-617"><a href="#cb2-617" aria-hidden="true" tabindex="-1"></a>    <span class="at">Csec_2SRI_SE             =</span> csec_2sri_se,</span>
+<span id="cb2-618"><a href="#cb2-618" aria-hidden="true" tabindex="-1"></a>    <span class="at">Csec_2SRI_P              =</span> csec_2sri_p,</span>
+<span id="cb2-619"><a href="#cb2-619" aria-hidden="true" tabindex="-1"></a>    <span class="at">Csec_2SRI_ATE            =</span> ate_csec_2sri<span class="sc">$</span>ATE,</span>
+<span id="cb2-620"><a href="#cb2-620" aria-hidden="true" tabindex="-1"></a>    <span class="at">Csec_2SRI_ATE_Boot_SE    =</span> boot_csec<span class="sc">$</span>boot_se,</span>
+<span id="cb2-621"><a href="#cb2-621" aria-hidden="true" tabindex="-1"></a>    <span class="at">Csec_2SRI_ATE_Boot_Lower =</span> boot_csec<span class="sc">$</span>boot_lower,</span>
+<span id="cb2-622"><a href="#cb2-622" aria-hidden="true" tabindex="-1"></a>    <span class="at">Csec_2SRI_ATE_Boot_Upper =</span> boot_csec<span class="sc">$</span>boot_upper,</span>
+<span id="cb2-623"><a href="#cb2-623" aria-hidden="true" tabindex="-1"></a>    <span class="at">Csec_Resid_Coef          =</span> resid_csec_coef,      <span class="co"># endogeneity test</span></span>
+<span id="cb2-624"><a href="#cb2-624" aria-hidden="true" tabindex="-1"></a>    <span class="at">Csec_Resid_P             =</span> resid_csec_p,</span>
+<span id="cb2-625"><a href="#cb2-625" aria-hidden="true" tabindex="-1"></a>    <span class="at">Csec_Signs_Consistent    =</span> csec_sign_ok,</span>
+<span id="cb2-626"><a href="#cb2-626" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-627"><a href="#cb2-627" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ── ANC ────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-628"><a href="#cb2-628" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANC_RBVP_ATE             =</span> rbvp_anc_ate,</span>
+<span id="cb2-629"><a href="#cb2-629" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANC_2SRI_Coef            =</span> anc_2sri_coef,</span>
+<span id="cb2-630"><a href="#cb2-630" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANC_2SRI_SE              =</span> anc_2sri_se,</span>
+<span id="cb2-631"><a href="#cb2-631" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANC_2SRI_P               =</span> anc_2sri_p,</span>
+<span id="cb2-632"><a href="#cb2-632" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANC_2SRI_ATE             =</span> ate_anc_2sri<span class="sc">$</span>ATE,</span>
+<span id="cb2-633"><a href="#cb2-633" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANC_2SRI_ATE_Boot_SE     =</span> boot_anc<span class="sc">$</span>boot_se,</span>
+<span id="cb2-634"><a href="#cb2-634" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANC_2SRI_ATE_Boot_Lower  =</span> boot_anc<span class="sc">$</span>boot_lower,</span>
+<span id="cb2-635"><a href="#cb2-635" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANC_2SRI_ATE_Boot_Upper  =</span> boot_anc<span class="sc">$</span>boot_upper,</span>
+<span id="cb2-636"><a href="#cb2-636" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANC_Resid_Coef           =</span> resid_anc_coef,       <span class="co"># endogeneity test</span></span>
+<span id="cb2-637"><a href="#cb2-637" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANC_Resid_P              =</span> resid_anc_p,</span>
+<span id="cb2-638"><a href="#cb2-638" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANC_Signs_Consistent     =</span> anc_sign_ok,</span>
+<span id="cb2-639"><a href="#cb2-639" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-640"><a href="#cb2-640" aria-hidden="true" tabindex="-1"></a>    <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb2-641"><a href="#cb2-641" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb2-642"><a href="#cb2-642" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-643"><a href="#cb2-643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-644"><a href="#cb2-644" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-645"><a href="#cb2-645" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 8: BUILD SUMMARY COMPARISON TABLE</span></span>
+<span id="cb2-646"><a href="#cb2-646" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-647"><a href="#cb2-647" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-648"><a href="#cb2-648" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">STEP 8: Building summary comparison table</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-649"><a href="#cb2-649" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"-----------------------------------</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-650"><a href="#cb2-650" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-651"><a href="#cb2-651" aria-hidden="true" tabindex="-1"></a><span class="co"># Long-format table for supplementary: one row per year × treatment</span></span>
+<span id="cb2-652"><a href="#cb2-652" aria-hidden="true" tabindex="-1"></a>summary_long <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb2-653"><a href="#cb2-653" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(results_2sri))) {</span>
+<span id="cb2-654"><a href="#cb2-654" aria-hidden="true" tabindex="-1"></a>  yr <span class="ot">&lt;-</span> results_2sri<span class="sc">$</span>Year[i]</span>
+<span id="cb2-655"><a href="#cb2-655" aria-hidden="true" tabindex="-1"></a>  N  <span class="ot">&lt;-</span> results_2sri<span class="sc">$</span>N[i]</span>
+<span id="cb2-656"><a href="#cb2-656" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-657"><a href="#cb2-657" aria-hidden="true" tabindex="-1"></a>  summary_long <span class="ot">&lt;-</span> <span class="fu">rbind</span>(summary_long, <span class="fu">data.frame</span>(</span>
+<span id="cb2-658"><a href="#cb2-658" aria-hidden="true" tabindex="-1"></a>    <span class="at">Year      =</span> yr,</span>
+<span id="cb2-659"><a href="#cb2-659" aria-hidden="true" tabindex="-1"></a>    <span class="at">N         =</span> N,</span>
+<span id="cb2-660"><a href="#cb2-660" aria-hidden="true" tabindex="-1"></a>    <span class="at">Treatment =</span> <span class="st">"C-section"</span>,</span>
+<span id="cb2-661"><a href="#cb2-661" aria-hidden="true" tabindex="-1"></a>    <span class="at">RBVP_ATE  =</span> results_2sri<span class="sc">$</span>Csec_RBVP_ATE[i],</span>
+<span id="cb2-662"><a href="#cb2-662" aria-hidden="true" tabindex="-1"></a>    <span class="at">SRI_Coef  =</span> results_2sri<span class="sc">$</span>Csec_2SRI_Coef[i],</span>
+<span id="cb2-663"><a href="#cb2-663" aria-hidden="true" tabindex="-1"></a>    <span class="at">SRI_P     =</span> results_2sri<span class="sc">$</span>Csec_2SRI_P[i],</span>
+<span id="cb2-664"><a href="#cb2-664" aria-hidden="true" tabindex="-1"></a>    <span class="at">SRI_ATE   =</span> results_2sri<span class="sc">$</span>Csec_2SRI_ATE[i],</span>
+<span id="cb2-665"><a href="#cb2-665" aria-hidden="true" tabindex="-1"></a>    <span class="at">SRI_CI_Lo =</span> results_2sri<span class="sc">$</span>Csec_2SRI_ATE_Boot_Lower[i],</span>
+<span id="cb2-666"><a href="#cb2-666" aria-hidden="true" tabindex="-1"></a>    <span class="at">SRI_CI_Hi =</span> results_2sri<span class="sc">$</span>Csec_2SRI_ATE_Boot_Upper[i],</span>
+<span id="cb2-667"><a href="#cb2-667" aria-hidden="true" tabindex="-1"></a>    <span class="at">Resid_P   =</span> results_2sri<span class="sc">$</span>Csec_Resid_P[i],</span>
+<span id="cb2-668"><a href="#cb2-668" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sign_Consistent =</span> results_2sri<span class="sc">$</span>Csec_Signs_Consistent[i],</span>
+<span id="cb2-669"><a href="#cb2-669" aria-hidden="true" tabindex="-1"></a>    <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb2-670"><a href="#cb2-670" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb2-671"><a href="#cb2-671" aria-hidden="true" tabindex="-1"></a>  summary_long <span class="ot">&lt;-</span> <span class="fu">rbind</span>(summary_long, <span class="fu">data.frame</span>(</span>
+<span id="cb2-672"><a href="#cb2-672" aria-hidden="true" tabindex="-1"></a>    <span class="at">Year      =</span> yr,</span>
+<span id="cb2-673"><a href="#cb2-673" aria-hidden="true" tabindex="-1"></a>    <span class="at">N         =</span> N,</span>
+<span id="cb2-674"><a href="#cb2-674" aria-hidden="true" tabindex="-1"></a>    <span class="at">Treatment =</span> <span class="st">"ANC 4+"</span>,</span>
+<span id="cb2-675"><a href="#cb2-675" aria-hidden="true" tabindex="-1"></a>    <span class="at">RBVP_ATE  =</span> results_2sri<span class="sc">$</span>ANC_RBVP_ATE[i],</span>
+<span id="cb2-676"><a href="#cb2-676" aria-hidden="true" tabindex="-1"></a>    <span class="at">SRI_Coef  =</span> results_2sri<span class="sc">$</span>ANC_2SRI_Coef[i],</span>
+<span id="cb2-677"><a href="#cb2-677" aria-hidden="true" tabindex="-1"></a>    <span class="at">SRI_P     =</span> results_2sri<span class="sc">$</span>ANC_2SRI_P[i],</span>
+<span id="cb2-678"><a href="#cb2-678" aria-hidden="true" tabindex="-1"></a>    <span class="at">SRI_ATE   =</span> results_2sri<span class="sc">$</span>ANC_2SRI_ATE[i],</span>
+<span id="cb2-679"><a href="#cb2-679" aria-hidden="true" tabindex="-1"></a>    <span class="at">SRI_CI_Lo =</span> results_2sri<span class="sc">$</span>ANC_2SRI_ATE_Boot_Lower[i],</span>
+<span id="cb2-680"><a href="#cb2-680" aria-hidden="true" tabindex="-1"></a>    <span class="at">SRI_CI_Hi =</span> results_2sri<span class="sc">$</span>ANC_2SRI_ATE_Boot_Upper[i],</span>
+<span id="cb2-681"><a href="#cb2-681" aria-hidden="true" tabindex="-1"></a>    <span class="at">Resid_P   =</span> results_2sri<span class="sc">$</span>ANC_Resid_P[i],</span>
+<span id="cb2-682"><a href="#cb2-682" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sign_Consistent =</span> results_2sri<span class="sc">$</span>ANC_Signs_Consistent[i],</span>
+<span id="cb2-683"><a href="#cb2-683" aria-hidden="true" tabindex="-1"></a>    <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb2-684"><a href="#cb2-684" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb2-685"><a href="#cb2-685" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-686"><a href="#cb2-686" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-687"><a href="#cb2-687" aria-hidden="true" tabindex="-1"></a><span class="co"># Full coefficient tables</span></span>
+<span id="cb2-688"><a href="#cb2-688" aria-hidden="true" tabindex="-1"></a>full_coefs_2sri <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">c</span>(full_stage1_2sri, full_stage2_csec, full_stage2_anc))</span>
+<span id="cb2-689"><a href="#cb2-689" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-690"><a href="#cb2-690" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-691"><a href="#cb2-691" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 9: SAVE OUTPUTS</span></span>
+<span id="cb2-692"><a href="#cb2-692" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-693"><a href="#cb2-693" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-694"><a href="#cb2-694" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">STEP 9: Saving outputs</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-695"><a href="#cb2-695" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"-----------------------------------</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-696"><a href="#cb2-696" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-697"><a href="#cb2-697" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="cf">function</span>(df, name) {</span>
+<span id="cb2-698"><a href="#cb2-698" aria-hidden="true" tabindex="-1"></a>  path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(output_dir, name)</span>
+<span id="cb2-699"><a href="#cb2-699" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(df, path, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-700"><a href="#cb2-700" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"✓ Saved:"</span>, name, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-701"><a href="#cb2-701" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-702"><a href="#cb2-702" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-703"><a href="#cb2-703" aria-hidden="true" tabindex="-1"></a><span class="fu">out</span>(results_2sri,   <span class="st">"2SRI_Full_Results.csv"</span>)</span>
+<span id="cb2-704"><a href="#cb2-704" aria-hidden="true" tabindex="-1"></a><span class="fu">out</span>(summary_long,   <span class="st">"2SRI_Summary_Comparison.csv"</span>)</span>
+<span id="cb2-705"><a href="#cb2-705" aria-hidden="true" tabindex="-1"></a><span class="fu">out</span>(full_coefs_2sri,<span class="st">"2SRI_Full_Coefficients.csv"</span>)</span>
+<span id="cb2-706"><a href="#cb2-706" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-707"><a href="#cb2-707" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-708"><a href="#cb2-708" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 10: DIAGNOSTIC REPORT</span></span>
+<span id="cb2-709"><a href="#cb2-709" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb2-710"><a href="#cb2-710" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-711"><a href="#cb2-711" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-712"><a href="#cb2-712" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">strrep</span>(<span class="st">"="</span>, <span class="dv">55</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-713"><a href="#cb2-713" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"2SRI ROBUSTNESS RESULTS SUMMARY</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-714"><a href="#cb2-714" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">strrep</span>(<span class="st">"="</span>, <span class="dv">55</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-715"><a href="#cb2-715" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-716"><a href="#cb2-716" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Sign consistency (key result for manuscript):</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-717"><a href="#cb2-717" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  RBVP ATE = primary estimate (bias-corrected)</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-718"><a href="#cb2-718" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  2SRI ATE = control function alternative estimator</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-719"><a href="#cb2-719" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Consistent = same sign → result not an artefact</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-720"><a href="#cb2-720" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-721"><a href="#cb2-721" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(summary_long <span class="sc">%&gt;%</span></span>
+<span id="cb2-722"><a href="#cb2-722" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(Year, Treatment, RBVP_ATE, SRI_ATE, Sign_Consistent) <span class="sc">%&gt;%</span></span>
+<span id="cb2-723"><a href="#cb2-723" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(RBVP_ATE, SRI_ATE), <span class="sc">~</span><span class="fu">round</span>(. <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">3</span>))),</span>
+<span id="cb2-724"><a href="#cb2-724" aria-hidden="true" tabindex="-1"></a>      <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-725"><a href="#cb2-725" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-726"><a href="#cb2-726" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Residual coefficient significance (endogeneity confirmation):</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-727"><a href="#cb2-727" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Significant resid_v in stage 2 = endogeneity confirmed</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-728"><a href="#cb2-728" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  (Wooldridge 2015 robust Hausman test interpretation)</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-729"><a href="#cb2-729" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-730"><a href="#cb2-730" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(summary_long <span class="sc">%&gt;%</span></span>
+<span id="cb2-731"><a href="#cb2-731" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(Year, Treatment, Resid_P) <span class="sc">%&gt;%</span></span>
+<span id="cb2-732"><a href="#cb2-732" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">Endogeneity_Confirmed =</span> <span class="fu">ifelse</span>(Resid_P <span class="sc">&lt;</span> <span class="fl">0.05</span>, <span class="st">"YES ***"</span>, <span class="st">"NO"</span>)),</span>
+<span id="cb2-733"><a href="#cb2-733" aria-hidden="true" tabindex="-1"></a>      <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-734"><a href="#cb2-734" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-735"><a href="#cb2-735" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Interpretation guide:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-736"><a href="#cb2-736" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"─────────────────────────────────────────────────────────</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-737"><a href="#cb2-737" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SIGN CONSISTENCY</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-738"><a href="#cb2-738" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  All 8 consistent → '2SRI corroborates RBVP sign-reversal</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-739"><a href="#cb2-739" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"                       findings. C-section effects are protective</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-740"><a href="#cb2-740" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"                       under both estimators in 2004 and 2022.'</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-741"><a href="#cb2-741" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Some inconsistent → investigate that wave/treatment further</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-742"><a href="#cb2-742" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"RESIDUAL COEFFICIENT</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-743"><a href="#cb2-743" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Significant (p&lt;0.05) → endogeneity confirmed. Naive probit</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-744"><a href="#cb2-744" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"                          would be biased; correction necessary.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-745"><a href="#cb2-745" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Not significant     → endogeneity absent in this wave/treatment</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-746"><a href="#cb2-746" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"                          (consistent with RBVP LR test result)</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-747"><a href="#cb2-747" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"MAGNITUDE COMPARISON</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-748"><a href="#cb2-748" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  RBVP and 2SRI ATEs will differ because:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-749"><a href="#cb2-749" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  - RBVP is a fully specified joint likelihood (efficient)</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-750"><a href="#cb2-750" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  - 2SRI is a control function (robust, less efficient)</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-751"><a href="#cb2-751" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Focus on DIRECTION not magnitude for the robustness claim.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-752"><a href="#cb2-752" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"─────────────────────────────────────────────────────────</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-753"><a href="#cb2-753" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-754"><a href="#cb2-754" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"MANUSCRIPT PARAGRAPH TEMPLATE:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-755"><a href="#cb2-755" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"'As a distributional-assumption-free robustness check, we</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-756"><a href="#cb2-756" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"re-estimated all treatment effects using two-stage residual</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-757"><a href="#cb2-757" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"inclusion (2SRI; Terza et al. 2008; Terza 2018). 2SRI augments</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-758"><a href="#cb2-758" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"the second-stage probit with the Stage 1 probit residuals,</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-759"><a href="#cb2-759" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"thereby purging endogeneity without imposing bivariate normality</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-760"><a href="#cb2-760" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"on the joint error structure (Wooldridge 2015). Bootstrap standard</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-761"><a href="#cb2-761" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"errors ("</span>, N_BOOT, <span class="st">"replications) account for the two-step estimation.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-762"><a href="#cb2-762" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Results are presented in Supplementary Table S-X. [Fill in]</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-763"><a href="#cb2-763" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"signs consistent/inconsistent with RBVP across all eight</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-764"><a href="#cb2-764" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"treatment-wave combinations, confirming that the sign-reversal</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-765"><a href="#cb2-765" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"findings are not an artefact of distributional assumptions.'</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-766"><a href="#cb2-766" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-767"><a href="#cb2-767" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"✓ 2SRI robustness analysis complete!</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-768"><a href="#cb2-768" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Output directory:"</span>, output_dir, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-terza2018twostage" class="csl-entry" role="listitem">
+Terza, Joseph V. 2018. <span>“Two-Stage Residual Inclusion Estimation: A Practitioners Guide to Stata Implementation.”</span> <em>Health Services and Outcomes Research Methodology</em> 17: 275–310. <a href="https://doi.org/10.1007/s10742-017-0177-9">https://doi.org/10.1007/s10742-017-0177-9</a>.
+</div>
+<div id="ref-terza2008twostage" class="csl-entry" role="listitem">
+Terza, Joseph V., Anirban Basu, and Paul J. Rathouz. 2008. <span>“Two-Stage Residual Inclusion Estimation: Addressing Endogeneity in Health Econometric Modeling.”</span> <em>Journal of Health Economics</em> 27 (3): 531–43. <a href="https://doi.org/10.1016/j.jhealeco.2007.09.009">https://doi.org/10.1016/j.jhealeco.2007.09.009</a>.
+</div>
+<div id="ref-wooldridge2015control" class="csl-entry" role="listitem">
+Wooldridge, Jeffrey M. 2015. <span>“Control Function Methods in Applied Econometrics.”</span> <em>Journal of Human Resources</em> 50 (2): 420–45. <a href="https://doi.org/10.3368/jhr.50.2.420">https://doi.org/10.3368/jhr.50.2.420</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/moccaram\.github\.io\/csection-paradox-bd\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./07-rbvp_estimation.html" class="pagination-link" aria-label="RBVP estimation and the headline ATE">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">RBVP estimation and the headline ATE</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./09-iv_validity.html" class="pagination-link" aria-label="IV validity: the cross-instrument placebo test">
+        <span class="nav-page-text"><span class="chapter-title">IV validity: the cross-instrument placebo test</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Two-stage residual inclusion (2SRI) and the Wooldridge endogeneity test"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_common.R"</span>))</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Motivation</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>The RBVP in Chapter 7 was designed to *correct* for endogeneity in C-section selection. Before relying on it, one should test for endogeneity at all. The standard non-parametric test is the Wooldridge control-function variant: fit a two-stage residual inclusion (2SRI) model, then test the significance of the first-stage residual in the second-stage outcome equation. If the residual coefficient is statistically significant, there is evidence of endogeneity; if not, the IV machinery may be correcting a problem the data does not detect <span class="co">[</span><span class="ot">@terza2008twostage; @terza2018twostage; @wooldridge2015control</span><span class="co">]</span>.</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data and setup</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>2SRI replicates the RBVP on the same data using a probit second stage. The cluster bootstrap uses 500 replicates. Implementation is in <span class="in">`scripts/40_causal_main/42_two_stage_residual_inclusion.R`</span> with bug fixes A6–A7 applied (cluster resampling + weights propagation through <span class="in">`glm()`</span>'s non-standard evaluation).</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-2sri</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "2SRI replication of the RBVP estimates and the Wooldridge-style endogeneity test. The residual-coefficient p-value tests for endogeneity in each treatment × wave cell."</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>s2ri <span class="ot">&lt;-</span> <span class="fu">load_2sri_summary</span>()</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="fu">make_2sri_table</span>(s2ri)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpretation</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>Two patterns matter:</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sign-consistency.** For C-section in 2017–18 and 2022, the 2SRI direction agrees with the RBVP direction. In 2004 and 2011, the RBVP returns positive while 2SRI returns negative — a sign flip across estimators. ANC is more stable across all waves.</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The Wooldridge test.** For *C-section in every wave*, the residual-coefficient p-value exceeds 0.19. The test cannot reject the null of exogeneity. Only the 2022 ANC cell shows endogeneity (p = 0.035).</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>Read literally: the entire IV machinery in this manuscript was deployed to correct endogeneity that, for C-section, the data cannot detect.</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>That is a substantive finding independent of any of the implementation bugs A1–A14: the residual coefficient comes from a non-bootstrap point estimation, and cluster-bootstrap fixes do not change it.</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>For a causal interpretation of the RBVP's 2022 result to be warranted, one needs to *also* claim that this Hausman-style test is underpowered against the relevant endogeneity. That is a defensible position; it is not a comfortable one. Either way, the Chapter-7 headline cannot be read alone.</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| file: scripts/40_causal_main/42_two_stage_residual_inclusion.R</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "scripts/40_causal_main/42_two_stage_residual_inclusion.R — 2SRI + Hausman-style endogeneity test"</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Mukarram Hosain. MIT License.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/moccaram/csection-paradox-bd/edit/main/08-two_stage_residual.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/moccaram/csection-paradox-bd/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,79 @@
+/*-- scss:defaults --*/
+
+// Type
+$font-family-sans-serif: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-monospace:  "JetBrains Mono", "Fira Code", "SF Mono", Menlo, Consolas, monospace !default;
+
+// Brand palette
+$primary:   #c0392b;   // C-section signal red
+$secondary: #2c3e50;   // deep ink for diagnostic prose
+$success:   #27ae60;   // for "not rejected" / robust signals
+$warning:   #e67e22;   // for fragile / weak findings
+$info:      #2980b9;   // sensemakr blue
+
+$body-bg:    #ffffff;
+$body-color: #222831;
+
+// Sidebar / TOC
+$sidebar-bg: #f3f3f7;
+
+// Code
+$code-block-bg: #f7f7f9;
+
+/*-- scss:rules --*/
+
+// Slightly tighter overall measure for a book-like feel
+.quarto-title-block {
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid #e6e6ea;
+  margin-bottom: 2rem;
+}
+
+.quarto-title-block .title {
+  font-weight: 600;
+}
+
+// Pull the subtitle into a quieter color
+.quarto-title-block .subtitle {
+  color: #555a66;
+  font-weight: 400;
+}
+
+// Section headings — a bit more disciplined
+h1, h2, h3, h4 {
+  font-weight: 600;
+  color: $secondary;
+}
+
+// Block quotes — use for "key finding" callouts in chapters
+blockquote {
+  border-left: 3px solid $primary;
+  background-color: #faf3f1;
+  padding: 0.6rem 1rem;
+  margin: 1rem 0;
+  color: #2a2a2e;
+}
+
+// Tables (kable) — tighter
+.table {
+  font-size: 0.92rem;
+}
+
+// Code-fold buttons
+.code-fold-btn {
+  font-size: 0.8rem;
+}
+
+// Footer
+.nav-footer {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+// Improve link contrast
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}

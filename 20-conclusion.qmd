@@ -1,0 +1,69 @@
+---
+title: "Conclusion: where the analysis points"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## What the diagnostics said
+
+The recursive bivariate probit returned a statistically significant protective effect of C-section on under-24-month mortality in 2022 Bangladesh (−1.51 percentage points, cluster-bootstrap 95% CI [−2.83, −0.19] pp). The diagnostic chain in Part II rejected the identifying assumptions on which that estimate rested:
+
+| Chapter | Diagnostic | Verdict |
+|---|---|---|
+| 8 | Wooldridge endogeneity test (2SRI residual) | Cannot reject exogeneity for C-section in any wave (p > 0.19 in all four) |
+| 9 | Cross-instrument placebo | 8/8 cells reject exclusion at p < 10⁻⁷ |
+| 10 | Copula sensitivity | 5/8 ATEs flip sign across Gaussian/Frank/Clayton |
+| 11 | Conley plausibly-exogenous bounds | LPM-2SLS CI spans zero in all 4 waves at γ = 0 |
+| 12 | E-value | CI-based E-value 1.25 — confounders of RR ≥ 1.25 nullify |
+| 13 | Cinelli-Hazlett RV | 7.2% (4.6% at α=0.05) — confounder partial R² of 5% nullifies |
+| 14 | Acerenza testable inequalities | Inequality #5 rejected; one or more identifying assumptions violated |
+| 15 | Predetermined Chow at 2011 | F = 246, p = 0.004 — regime break structurally detectable |
+
+The estimator works. The identification doesn't.
+
+## The methodological pivot
+
+The brief's central argument has three parts.
+
+**First — the IV problem is structural, not implementation.** The community-LOO IV used by the RBVP cannot satisfy the exclusion restriction in this setting. This is Angrist [@angrist2014peer] and Betz, Cook & Hollenbach [@betz2018spatial] applied to Bangladesh DHS data. The chapter 9 placebo test is unambiguous evidence; no amount of cleaner code or better controls fixes it.
+
+**Second — the outcome is wrong for the new regime.** Mortality fell from ~108 to ~37 per 1,000 live births across the observation window for reasons that are *not* about C-section access — nutrition, sanitation, vaccine coverage. C-section's marginal contribution to mortality in a demand-driven, low-baseline-risk population is small and easily masked. The relevant outcomes for elective C-section in a regime where supply is no longer the binding constraint are *morbidity* outcomes: microbiome composition, asthma and allergic disease [@vanderkleij2024asthma], neurodevelopment, type-1 diabetes incidence. These are tracked in the recent literature and not measurable from cross-sectional BDHS waves.
+
+**Third — the design is wrong for the new identification problem.** Community-level and spatial instruments [@angrist2014peer; @betz2018spatial] cannot recover causal effects in regime-shifted populations. The alternative design, well established in the healthcare-economics literature, is *provider-level* IV: variation across hospitals or obstetricians in their propensity to recommend C-section, conditional on observed patient characteristics [@doyle2015ambulance; @chyn2024examiner]. Card-Dobkin-Maestas [@card2009medicare] use a similar logic at the policy level for Medicare. None of these designs use community-level IVs. All of them require *administrative* data linkable to outcomes — data that BDHS does not provide.
+
+## What this study contributes
+
+This book is the methodological audit, not a positive causal estimate. Its contributions:
+
+1. **A worked example** of building a sophisticated IV estimator and then running its own diagnostic chain to conclude the identification is broken. This is the methodological move the original PLOS One and SSM-Population Health submissions did not make.
+
+2. **A reproducible pipeline.** Fourteen documented bug fixes (A1–A14) brought the original analysis into reproducible form. The pipeline graph, methodology map, and full changelog are in the appendices.
+
+3. **A concrete pivot direction.** Future work should: (a) move to morbidity outcomes (microbiome, asthma, neurodevelopment), (b) use provider-level rather than spatial instruments [@doyle2015ambulance; @chyn2024examiner], (c) link DHS-style cross-sectional cohorts to administrative birth and hospital records, (d) pre-register the design before looking at the data [@nosek2022preregistration; @hernan2016target].
+
+4. **Multi-country generalization.** The Pakistan and India robustness chapters show the diagnostic failures are not a Bangladesh peculiarity. The full South Asian DHS/NFHS panel exhibits the same regime-shift identification problem.
+
+## What's deliberately not done
+
+This book does *not* include:
+
+- A structural equation model of latent maternal-care quality.
+- A Bayesian spatiotemporal model (e.g., Stan or INLA).
+- A formal COVID-19 disruption analysis with 2020-era data.
+
+Each of these is a natural extension. None changes the diagnostic conclusion in this volume: a community-level instrument cannot identify the question that was asked.
+
+## A short reading list
+
+For the readers who want to follow the threads forward:
+
+- For the IV-critique literature: Angrist (2014) [@angrist2014peer]; Betz, Cook & Hollenbach (2018) [@betz2018spatial]; Han & Vytlacil (2017) [@han2017identification]; Mourifié & Méango (2014) [@mourifie2014critique]; Acerenza, Bartalotti & Kédagni (2023) [@acerenza2023testable].
+- For provider-level identification: Doyle, Graves, Gruber & Kleiner (2015) [@doyle2015ambulance]; Chyn, Frandsen & Leslie (2024) [@chyn2024examiner]; Card, Dobkin & Maestas (2009) [@card2009medicare].
+- For modern sensitivity analysis: VanderWeele & Ding (2017) [@vanderweele2017evalue]; Cinelli & Hazlett (2020) [@cinelli2020sensemakr]; Conley, Hansen & Rossi (2012) [@conley2012plausibly].
+- For the substantive Bangladesh story: Sujon et al. (2025) [@sujon2025cesarean]; WHO (2015) [@who2015csection]; Khan et al. (2017) [@khan2017csection].
+
+The complete bibliography is in `references.bib`; the back-matter renders in the [References](references.qmd) section.

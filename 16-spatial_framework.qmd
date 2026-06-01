@@ -1,0 +1,50 @@
+---
+title: "Spatial framework: DHS GPS clusters and Malaria Atlas travel time"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+Part II's diagnostic chain treats the community-LOO C-section rate as the instrument. A natural follow-up question is whether a *spatially-derived* instrument — travel time to the nearest healthcare facility, constructed from Malaria Atlas Project (MAP) accessibility rasters — could plausibly satisfy exclusion where the community LOO instrument did not.
+
+Part III builds the spatial pipeline: DHS cluster GPS coordinates merged with MAP travel-time rasters, multilevel models that nest individuals in clusters in districts, and a parallel pipeline for India (NFHS) and Pakistan (DHS) to test whether the Bangladesh pattern is country-specific.
+
+## Pipeline overview
+
+The spatial pipeline runs in five stages, all scripted in `scripts/30_spatial/`:
+
+| Stage | Script | Output |
+|---|---|---|
+| Download DHS GPS data | `scripts/10_download/DOWNLOAD_DHS_GEOSPATIAL_FACILITY.R` | `data/raw/gps/` |
+| Merge GPS with BDHS recodes | `scripts/30_spatial/31_dhs_gps_download.R` + `32_dhs_gps_merge.R` | `data/spatial/Bangladesh_Spatial_Master.rds` |
+| Extract travel time per cluster | `scripts/30_spatial/33_extract_travel_time.R` | `data/spatial/Bangladesh_Spatial_TravelTime.rds` |
+| Wave-level OLS with travel time | `scripts/30_spatial/34_spatial_models_bd.R` | Travel-time regression coefficients |
+| Multilevel models | `scripts/30_spatial/35_multilevel_models.R` | Random-intercept and random-slope estimates by cluster |
+
+Raw GPS coordinates are obtained from DHS via the `rdhs` API; MAP travel-time rasters are downloaded via the `malariaAtlas` R package.
+
+## Pre-computed outputs
+
+Because the spatial pipeline involves large raster downloads (~152 MB for the global travel-time raster) and the raw DHS GPS data are not redistributable, this book ships the *merged* spatial RDS files for Bangladesh (and a multi-country individual-level RDS for Part III's appendix in Chapter 19), and references the figures produced by the spatial pipeline. Reproducing from scratch requires DHS registration; see the preface and `notes/REPLICATION_GUIDE.md`.
+
+```{r}
+#| label: spatial-files
+#| echo: false
+spatial_files <- list.files(here::here("data", "spatial"), pattern = "\\.rds$", full.names = FALSE)
+if (length(spatial_files) > 0) {
+  tibble::tibble(`Committed RDS files in data/spatial/` = spatial_files) |> book_table()
+}
+```
+
+## What Chapters 17–19 will do
+
+- **Chapter 17** examines the *first-stage relationship* between travel time and individual C-section uptake across waves. The brief's hypothesis: in 2004 the relationship is strong (supply-side); by 2022 it has collapsed (demand-side now dominates).
+- **Chapter 18** fits multilevel models that nest individuals in clusters in administrative units, partitioning the variance in C-section uptake between individual and contextual levels.
+- **Chapter 19** extends the multi-country comparison to India (NFHS) and Pakistan (DHS), using the same construction pipeline.
+
+The pipeline is the existing implementation from `scripts/30_spatial/`. This part of the book describes what was done and shows the headline outputs; the heavy machinery is preserved in the scripts for reproduction by readers who have DHS access.

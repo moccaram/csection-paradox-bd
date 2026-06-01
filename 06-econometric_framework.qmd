@@ -1,0 +1,47 @@
+---
+title: "The econometric framework"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+Part I documented a wave-by-wave sign flip in a descriptive logistic regression and described the regime change underlying it. Part II asks the next question: can a *causal* estimator recover a stable treatment effect once selection is modeled? The chapters that follow build the recursive bivariate probit (RBVP) used in the original manuscript, then run the diagnostic chain that determines whether the estimator's identifying assumptions hold.
+
+This chapter lays out the framework that the rest of Part II inhabits: the IV's three conditions, the LATE versus ATE distinction, and the specific structural critique that applies when the instrument is constructed as a leave-one-out community mean [@angrist2014peer; @betz2018spatial].
+
+## The three IV conditions
+
+Following Duflo [@duflo2023mit], an instrument $Z$ for an endogenous treatment $D$ on an outcome $Y$ needs:
+
+1. **Relevance** — $Z$ predicts $D$ (testable via the first-stage F).
+2. **Exogeneity** — $Z$ is as-good-as-randomly assigned (testable via balance regressions against observable confounders).
+3. **Exclusion** — $Z$ affects $Y$ *only through* $D$ (**not directly testable**; must be argued case-by-case).
+
+The third condition is the hardest. As Duflo puts it: *"You could prove yourself wrong, but you're never going to be able to prove yourself right."* Chapter 9's cross-instrument placebo test is precisely the test of exclusion that *can* prove the assumption wrong.
+
+## The community leave-one-out instrument
+
+The original RBVP for this project uses a community-level leave-one-out average of C-section status as the instrument for individual C-section status [@wilde2000identification]:
+
+$$
+Z_{ij} \;=\; \frac{1}{N_j - 1} \sum_{k \neq i, \; k \in j} D_{kj}
+$$
+
+where individual $i$ is in community (DHS cluster) $j$ with $N_j$ members. The construction is conventional in applied work; it satisfies relevance by construction; and it's the kind of instrument the brief argues is structurally vulnerable.
+
+The vulnerability has a canonical name. Angrist [@angrist2014peer] showed that leave-one-out community-mean instruments can mechanically reflect *individual* characteristics; Betz, Cook & Hollenbach [@betz2018spatial] showed that spatial / clustered instruments aggregate the very confounds the analyst is trying to escape. Both apply directly to the community-LOO IV in this setting.
+
+## LATE, not ATE
+
+Even when an IV satisfies all three conditions, what it identifies is not the average treatment effect on the population but the *local* average treatment effect — the effect on the subset of individuals whose treatment status was changed by the instrument [@imbens1994late; @angrist1996iv]. For the community-LOO IV: those are women whose individual C-section decision was driven by community pressure / norms, *not* by clinical indication. Chapter 4 already showed that the women most influenced by demand-driven community pressure are concentrated in the upper wealth quintiles. Even with a valid instrument, the resulting causal estimate would not describe the population for which the question "does C-section reduce mortality?" is policy-relevant.
+
+## What's coming in Part II
+
+Chapter 7 fits the RBVP and reports the headline ATE. Chapter 8 cross-checks with two-stage residual inclusion and runs the Wooldridge-style endogeneity test. Chapter 9 runs the cross-instrument placebo — the test that *can* falsify the exclusion restriction — and finds it falsified in all 8 cells. Chapter 10 tests the bivariate-normality assumption via copula sensitivity. Chapter 11 runs the Conley plausibly-exogenous bounds. Chapters 12–15 add the modern sensitivity layer.
+
+By the end of Chapter 14, the identifying assumptions on which Chapter 7's headline rests will have been rejected on three independent axes.

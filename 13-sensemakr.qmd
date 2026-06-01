@@ -1,0 +1,68 @@
+---
+title: "OVB sensitivity: Cinelli–Hazlett robustness values"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+Cinelli and Hazlett's `sensemakr` framework [@cinelli2020sensemakr] is the modern extension of Rosenbaum-style omitted-variable bias sensitivity. Given a fitted regression, it computes the *robustness value* (RV): the minimum partial $R^2$ that an unmeasured confounder would need to have with *both* the treatment and the outcome to (i) reduce the estimated effect to zero (RV at $q=1$) or (ii) make it statistically insignificant at $\alpha = 0.05$. It also benchmarks RV against observed covariates so the reader has a substantive yardstick for "how strong would an unmeasured confounder need to be relative to mother's education or urban residence?"
+
+The framework is applied to a linear-probability model rather than the RBVP itself, both because `sensemakr` is designed for OLS and because the LPM is a transparent cross-check against the RBVP's bivariate-normal machinery.
+
+## Data and setup
+
+Implementation: `scripts/50_phase_d_modern/52_sensemakr.R`. Per wave (4 waves), an LPM is fit:
+`child_died ~ c_section + controls`. Benchmark covariates are `mother_education`, `infrastructure_index`, and `residence_urban`.
+
+## Results
+
+```{r}
+#| label: tbl-sensemakr
+#| tbl-cap: "Robustness values per wave. RV (q=1) is the partial R² a confounder needs to nullify the effect; RV (α=0.05) is the smaller threshold for losing statistical significance."
+sens <- load_sensemakr()
+sens |>
+  dplyr::transmute(
+    Year, N,
+    `LPM est. (pp)` = sprintf("%+.2f", 100 * estimate),
+    `SE (pp)` = sprintf("%.2f", 100 * se),
+    `RV q=1` = sprintf("%.1f%%", 100 * robustness_value_q1),
+    `RV α=0.05` = sprintf("%.1f%%", 100 * robustness_value_q1_a)
+  ) |>
+  book_table(align = c("l","r","r","r","r","r"))
+```
+
+```{r}
+#| label: fig-sensemakr-rv
+#| fig-cap: "Robustness values per wave. The 2022 RV at q=1 is 7.2%; at α=0.05 it is 4.6%. Both are easily exceeded by the partial R² of mother's education and infrastructure index in this data."
+#| echo: false
+knitr::include_graphics(here::here("figures", "phase_d", "sensemakr_RV_per_wave.png"))
+```
+
+```{r}
+#| label: fig-sensemakr-2022
+#| fig-cap: "Cinelli-Hazlett contour plot for the 2022 wave. The estimated treatment effect, the null contour, and benchmark covariates (1×, 2×, 3× the strength of mother's education etc.) are overlaid. A confounder positioned even 1× as strong as observed benchmarks lands beyond the null contour."
+#| echo: false
+knitr::include_graphics(here::here("figures", "phase_d", "sensemakr_2022_contour.png"))
+```
+
+## Interpretation
+
+For the 2022 wave, an unmeasured confounder with a partial $R^2$ of 7.2% on *both* the C-section variable and the outcome variable would fully nullify the protective effect. To make it statistically insignificant at $\alpha = 0.05$, the confounder only needs a partial $R^2$ of 4.6%.
+
+These thresholds are *low*. The benchmark covariates that are *in* the model already have partial $R^2$ values in this range. Mother's education has a partial $R^2$ near the 4–5% mark with both treatment and outcome; infrastructure index is similar.
+
+The substantive translation: a community-level confounder of comparable strength to the observed *individual-level* covariates would overturn the headline. Chapter 4 already showed that community-level wealth and urbanization gradients are substantial; Chapter 9 showed that the community-LOO instrument is bundling exactly those confounders.
+
+## Code
+
+```{r}
+#| file: scripts/50_phase_d_modern/52_sensemakr.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/50_phase_d_modern/52_sensemakr.R — Cinelli-Hazlett sensemakr"
+```

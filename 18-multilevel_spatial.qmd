@@ -1,0 +1,54 @@
+---
+title: "Multilevel spatial models"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+C-section decisions are nested: individual mothers within DHS clusters within administrative divisions. A multilevel model that partitions the variance in C-section uptake across these levels answers a question Part II cannot: how much of the variation that the community-LOO IV is "explaining" is actually *contextual* variation that operates through pathways other than individual C-section access?
+
+If most of the unexplained variation in mortality is at the cluster level (urban services, sanitation, road quality), then a community-LOO instrument cannot satisfy exclusion. This chapter is the structural-equation cousin of Chapter 9's placebo test.
+
+## Data and setup
+
+Random-intercept and random-slope models are fit at the cluster level using `lme4`. The spatial multilevel pipeline is in `scripts/30_spatial/35_multilevel_models.R`. Pre-computed estimates and an associated figure are committed to `figures/`.
+
+## Results
+
+```{r}
+#| label: fig-multilevel
+#| fig-cap: "Multilevel model coefficients by era (supply-constrained vs demand-driven). The cluster-level random effect for C-section uptake reduces under the demand-driven regime, consistent with the within-cluster heterogeneity (private vs public, urban vs rural)."
+#| echo: false
+knitr::include_graphics(here::here("figures", "07_multilevel_coefs.png"))
+```
+
+```{r}
+#| label: fig-bd-heatmap
+#| fig-cap: "Bangladesh district-level C-section rate heatmap, 2022. The geographic concentration of high-rate districts in and around Dhaka and other urban centers is unambiguous; the variation across districts is large enough that a 'community average' instrument cannot be a single coherent object."
+#| echo: false
+knitr::include_graphics(here::here("figures", "09_bd_heatmap.png"))
+```
+
+## Interpretation
+
+Two findings:
+
+1. **Variance partitioning shifts.** Under supply-constrained conditions, cluster-level variation in C-section uptake is concentrated geographically (urban vs rural). Under demand-driven conditions, *within-cluster* variation grows substantially (private vs public sector even within the same village), and the cluster-level variance component shrinks. This is direct evidence that the community LOO instrument is averaging over an increasingly heterogeneous within-cluster population.
+
+2. **Geographic concentration.** The Bangladesh district heatmap shows that C-section rates are not just rising on average — they are increasingly concentrated in metropolitan / peri-urban districts. Districts in and around Dhaka have rates over 50%; rural districts in the north remain near 25%. A national-level analysis that fits a single ATE across this distribution is masking very large spatial heterogeneity.
+
+The combination of these two findings is consistent with the brief's pivot direction: the question "does C-section reduce mortality" is not the right question to ask of national-level Bangladesh data at the current regime. It would need to be re-asked with stratification by sector and by district, with appropriate handling of the multi-level structure.
+
+## Code
+
+```{r}
+#| file: scripts/30_spatial/35_multilevel_models.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/30_spatial/35_multilevel_models.R — multilevel C-section / mortality models"
+```

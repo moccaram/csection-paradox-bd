@@ -1,0 +1,47 @@
+---
+title: "Copula sensitivity: testing bivariate normality"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+The RBVP in Chapter 7 assumes the latent errors of the treatment and outcome equations are jointly Gaussian. That assumption is convenient and rarely tested. McGovern et al. and Klein et al. [@mcgovern2015robustness; @klein2019selection] argue that refitting the same model under alternative copula families — Gaussian, Frank, Clayton, Gumbel — and checking sign stability is a minimum bar for taking the headline ATE seriously. A sign flip across families means the result depends on the dependence-structure assumption rather than on the data.
+
+## Data and setup
+
+Implementation: `scripts/40_causal_main/43_copula_sensitivity.R`. The Gumbel family did not converge on this data (no upper-tail dependence to identify), which is itself a methodological finding worth recording — but the other three families fit cleanly.
+
+## Results
+
+```{r}
+#| label: tbl-copula
+#| tbl-cap: "Copula sensitivity. Each row is a wave × treatment cell. The three ATE columns are point estimates under Gaussian, Frank, and Clayton families on the probability scale."
+cop <- load_copula_signflip()
+make_copula_table(cop)
+```
+
+## Interpretation
+
+Five of eight cells flip sign. For 2022 C-section specifically — the headline result of the book — the three families disagree non-trivially:
+
+- Gaussian (the manuscript's default): −0.003 (essentially null)
+- Frank: +0.002 (essentially null, opposite sign)
+- Clayton: −0.017 (matches the cluster-bootstrap headline of −1.51 pp)
+
+The −1.51 pp protective effect in Chapter 7 is recoverable only under Clayton (lower-tail dependence) or under the full `pbivnorm` computation that script 41 implements. Under Gaussian — which is the standard, the manuscript baseline, and the assumption that licenses the RBVP — the effect is null.
+
+Put differently: the headline depends on the assumption that the latent error structure has lower-tail dependence. There is no substantive reason to prefer Clayton over Gaussian for this application. The result is therefore not robust to the dependence-structure assumption.
+
+## Code
+
+```{r}
+#| file: scripts/40_causal_main/43_copula_sensitivity.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/40_causal_main/43_copula_sensitivity.R — Gaussian / Frank / Clayton / Gumbel refit"
+```

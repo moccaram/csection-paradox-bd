@@ -1,0 +1,65 @@
+---
+title: "Bangladesh's C-section trajectory and the WHO threshold"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+The single most arresting fact about C-section use in Bangladesh between 2004 and 2022 is the *speed* of change. The national rate quintupled and crossed every WHO and public-health benchmark in less than fifteen years. Before any causal analysis is attempted, the reader needs to see the trajectory itself.
+
+The WHO's 2015 statement on caesarean section rates [@who2015csection] cautions that population-level rates above 10–15% are not associated with maternal or neonatal benefit, and may be associated with harm. Bangladesh crossed 15% in 2010, 30% in 2016, and 40% in 2020.
+
+## Data and setup
+
+Wave-level trajectory data come from the descriptive aggregation in `data/processed/descriptive/P1_Csec_Trends_All.csv` (Bangladesh, India, Pakistan together) and the threshold-crossing year estimates in `data/processed/descriptive/P1_Threshold_Years.csv`.
+
+```{r}
+#| label: load-trends
+trends <- load_csec_trends()
+trends |> book_table(digits = 1)
+```
+
+## Results
+
+```{r}
+#| label: fig-csec-trajectory
+#| fig-cap: "C-section rate trajectories in South Asia, DHS/NFHS 1999–2022. The WHO 15% threshold (green dotted line) and the hypothesized Bangladesh regime transition at 2011 (gray dashed line) are annotated."
+#| echo: false
+knitr::include_graphics(here::here("figures", "01_csec_trajectory.png"))
+```
+
+```{r}
+#| label: fig-who-threshold
+#| fig-cap: "Bangladesh-focused threshold crossings: 15% (2010), 30% (2016), 40% (2020). The WHO 15% line is highlighted; further thresholds are annotated for reference."
+#| echo: false
+knitr::include_graphics(here::here("figures", "02_who_threshold_crossed.png"))
+```
+
+## Interpretation
+
+Two observations matter for the rest of the book. First, Bangladesh's trajectory is *steeper* than India's or Pakistan's at every wave — by 2022, Bangladesh's C-section rate exceeds India's by roughly 20 percentage points despite India's much larger health-system base. Second, the 2011 wave is the inflection: pre-2011, the slope is gentler; post-2011, it accelerates and reaches its modern level by 2017–18.
+
+The brief calls the post-2011 era *demand-driven*: rates above WHO's safety ceiling, private-sector concentration, social-norm propagation. The supply-constrained era — emergency-only, scarcity-driven — is what's left of the pre-2011 BDHS waves. Whether a single instrument identifies a single treatment effect across this regime change is precisely the question Part II forces.
+
+## Code
+
+The figures were produced by:
+
+```{r}
+#| file: scripts/20_descriptive/21_csec_trajectory.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/20_descriptive/21_csec_trajectory.R"
+```
+
+```{r}
+#| file: scripts/20_descriptive/22_who_threshold_crossing.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/20_descriptive/22_who_threshold_crossing.R"
+```

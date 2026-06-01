@@ -1,0 +1,42 @@
+---
+title: "Appendix A: Pipeline graph and methodology map"
+---
+
+The pipeline graph and methodology map document the dataflow and the mapping between each output and its underlying method. They are committed in source form at:
+
+- `notes/PIPELINE_GRAPH.md` — the data-to-script-to-output dependency map
+- `notes/METHODOLOGY_MAP.md` — the output-to-paper-reference map
+
+A condensed view follows.
+
+## Data → script → output map
+
+| Stage | Input | Script | Output |
+|---|---|---|---|
+| 1. Data prep | DHS BR/IR recodes | (manual) → `data_step1_complete.rds` | `outputs/causal_main/data_step1_complete.rds` |
+| 2. Instruments | `data_step1_complete.rds` | `41_rbvp_main.R` Step 4 | `outputs/causal_main/data_with_instruments.rds` |
+| 3. RBVP estimation | `data_with_instruments.rds` | `41_rbvp_main.R` Step 5 | `outputs/causal_main/Formal_ATE_Results.csv` |
+| 4. 2SRI | `data_with_instruments.rds` | `42_two_stage_residual_inclusion.R` | `outputs/causal_main/2SRI_*` |
+| 5. Copula sensitivity | `data_with_instruments.rds` | `43_copula_sensitivity.R` | `outputs/causal_main/Copula_*` |
+| 6. IV validity | `data_with_instruments.rds` | `44_iv_validity_tests.R` | `outputs/causal_main/IV_*` |
+| 7. Conley bounds | `data_with_instruments.rds` | `45_conley_bounds.R` | `outputs/causal_main/Conley_*` |
+| 8a. E-value | `Formal_ATE_Results.csv` | `51_evalue.R` | `outputs/phase_d/evalue_csection.csv` |
+| 8b. sensemakr | `data_step1_complete.rds` | `52_sensemakr.R` | `outputs/phase_d/sensemakr_summary.csv` |
+| 8c. Acerenza | `data_with_instruments.rds` | `53_acerenza_inequalities.R` | `outputs/phase_d/acerenza_test_2022.csv` |
+| 8d. Chow break | `P1_Csec_Trends_All.csv` | `54_chow_descriptive_break.R` | `outputs/phase_d/chow_test_2011.csv` |
+
+## Methodology → reference map
+
+| Method | Canonical reference | Notes |
+|---|---|---|
+| Recursive bivariate probit (RBVP) | Marra & Radice 2011, Greene 2012 | `GJRM` package, `model = "B"` |
+| Cluster bootstrap | Cameron & Miller 2015 | 200 reps (script_3), 500 reps (2SRI) |
+| Two-stage residual inclusion | Terza 2018, Wooldridge 2015 | Hausman variant via residual coefficient test |
+| Copula sensitivity | McGovern et al. 2015, Klein et al. 2019 | Gaussian, Frank, Clayton, (attempted) Gumbel |
+| Cross-instrument placebo | Swanson & Hernán 2013 | Direct test of exclusion |
+| Conley bounds | Conley, Hansen & Rossi 2012 | LPM-2SLS scale |
+| E-value | VanderWeele & Ding 2017 | RR scale conversion from RD ATE |
+| Robustness value (sensemakr) | Cinelli & Hazlett 2020 | LPM cross-check |
+| Acerenza inequalities | Acerenza, Bartalotti & Kédagni 2023 | Simplified bootstrap analog |
+| Chow test (predetermined break) | Chow 1960 | Breakdate 2011 chosen ex ante |
+| Identification critique | Angrist 2014, Betz, Cook & Hollenbach 2018 | Community-LOO + spatial IV critique |

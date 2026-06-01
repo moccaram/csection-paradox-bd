@@ -1,0 +1,37 @@
+---
+title: "Appendix B: Bug-fix changelog (A1–A14)"
+---
+
+The original implementation of the RBVP pipeline contained fourteen documented issues that materially affected the cluster-bootstrap CI, the cross-script consistency of point estimates, and the validity of derived statistics. All fourteen were fixed before the production rerun whose outputs are the basis of this book.
+
+The complete changelog with line-by-line notes is preserved in source form at `notes/CHANGELOG_FIXES.md`. A condensed view follows.
+
+## First-round fixes (A1–A9, May 2026)
+
+| # | Severity | Issue | Resolution |
+|---|---|---|---|
+| A1 | 🔴 Critical | Conley scale mismatch (RBVP probability-scale ATE mixed with probit latent-scale first-stage) | Rewrote `45_conley_bounds.R` to use LPM-2SLS via `AER::ivreg` |
+| A2 | 🔴 Critical | Bootstrap used `pnorm()` (univariate); point estimate used `pbivnorm()` (bivariate ρ-corrected). CIs not aligned to point estimator. | Harmonized to `pbivnorm` in bootstrap |
+| A3 | 🟠 Medium | 20 bootstrap replicates is far too few | Raised to 200 via `N_BOOT` environment variable; 500 in 2SRI |
+| A4 | 🟠 Medium | Observation-level bootstrap underestimates SE; DHS data has clustered sampling | Replaced with cluster bootstrap at DHS cluster_id level |
+| A5 | 🟠 Logic | Step 5B references an empty `results` data frame; `Naive_Probit_Comparison.csv` was silently NA | Renamed to `ate_results` |
+| A6 | 🟠 Medium | 2SRI cluster bootstrap missing — same issue as A4 | Cluster resampling implemented |
+| A7 | 🟠 Logic | 2SRI bootstrap silently swallows weights inside `glm()` via NSE failure | Pass `weights = weight` unquoted |
+| A8 | 🟡 Minor | Decorative Acerenza citation in IV validity script header | Removed; Acerenza test moved to Phase D |
+| A9 | 🟡 Minor | Copula sensitivity covered 3 of 4 families (no Gumbel) | Added Gumbel; documented non-convergence |
+
+## Second-round fixes (A10–A14, May 2026)
+
+| # | Severity | Issue | Resolution |
+|---|---|---|---|
+| A10 | 🔴 Critical | `Formal_ATE_Results.csv` was never written (script announced "Saved" but had no `write.csv` call); stale carryover from earlier runs | Added `write.csv(ate_results, …)` after main loop |
+| A11 | 🟠 Logic | Year 2011 "skip" was an output-buffering artifact, not a real bug | Verified all 4 waves process; N=4,661 complete cases for 2011 |
+| A12 | 🟠 Logic | Naive probit reported `Bias = 3.56e+20%` due to silent `glm()` divergence on small year-specific samples | Guarded with `converged` check + `|coef| < 50` sanity bound |
+| A13 | 🔴 Critical | 2SRI bootstrap silently returned NA for every replicate (NSE failure on `dat_boot$weight`) | Surfaced the underlying error; fixed by passing `weights = weight` |
+| A14 | 🔴 Critical | ANC and C-section column labels were INVERTED in `Formal_ATE_Results.csv`; the script's variable names didn't match what the GJRM fits computed | Swapped `ate_anc_val` / `ate_csec_val` to match actual computation |
+
+## Implications
+
+Combined effect of A10 + A14: the prior file on disk had stale, possibly-correctly-labeled values from an older script version; the post-fix run produces the first honest, correctly-labeled values. The −1.51 pp 2022 RBVP ATE in Chapter 7 is from the post-A14 run. The previous file claimed −0.21 pp (NS); that number is not in this book.
+
+All scripts referenced in this book are the post-fix versions, committed at `scripts/40_causal_main/` and `scripts/50_phase_d_modern/`.

@@ -22,7 +22,7 @@ Description:
     placebo, Wooldridge-style endogeneity test via 2SRI, copula
     sensitivity), and a modern-inference layer (E-value, sensemakr,
     simplified Acerenza inequalities, Chow test).
-License: CC BY 4.0 + file LICENSE
+License: MIT + file LICENSE
 URL: https://github.com/moccaram/csection-paradox-bd
 BugReports: https://github.com/moccaram/csection-paradox-bd/issues
 Encoding: UTF-8

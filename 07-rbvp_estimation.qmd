@@ -1,0 +1,56 @@
+---
+title: "RBVP estimation and the headline ATE"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+The recursive bivariate probit (RBVP) is the workhorse of this manuscript. It jointly estimates a treatment equation (C-section as a function of the community-LOO IV plus controls) and an outcome equation (under-24-month mortality as a function of C-section plus controls), letting the correlation in the latent errors be estimated rather than assumed zero. The average treatment effect on the probability scale is recovered via the bivariate normal CDF [@marra2011estimation; @greene2012econometric].
+
+## Data and setup
+
+The model uses 17,603 children across four BDHS waves (2004, 2011, 2017–18, 2022). Standard errors are obtained by a *cluster* bootstrap (200 replicates) at the DHS cluster level, which is the correct unit of resampling under DHS's clustered sampling design [@cameron2015practitioners].
+
+The implementation is in `scripts/40_causal_main/41_rbvp_main.R`. Fourteen documented bug fixes (A1–A14) were applied to harmonize the bootstrap estimator with the point estimator, correct cluster vs. observation resampling, and resolve label inversions. The full changelog is in [Appendix B](appendixB-changelog.qmd).
+
+## Results
+
+```{r}
+#| label: tbl-ate
+#| tbl-cap: "Wave-stratified RBVP ATE of C-section on under-24-month mortality, in percentage points."
+ate <- load_formal_ate()
+make_ate_table(ate)
+```
+
+```{r}
+#| label: fig-ate-trend
+#| fig-cap: "Wave-by-wave ATE trajectory. The 2022 estimate is the only one whose 95% cluster-bootstrap CI excludes zero."
+#| echo: false
+knitr::include_graphics(here::here("figures", "Figure_4_ATE_Trends.png"))
+```
+
+## Interpretation
+
+The headline finding is the 2022 row: a statistically significant **protective** effect of 1.51 percentage points on the probability scale, with a 95% cluster-bootstrap CI of [−2.83, −0.19] pp. The earlier waves (2004, 2011, 2017–18) all return positive point estimates with CIs spanning zero.
+
+Read at face value, this looks like a publication-grade result. Read carefully — and read against Chapters 8–14 — it is the *first* claim in the diagnostic chain, not the last. Three independent tests still need to be applied:
+
+- Did the instrument satisfy the exclusion restriction? (Chapter 9.)
+- Did the data show evidence of endogeneity *at all*? (Chapter 8's Wooldridge-style test.)
+- Did the bivariate-normality assumption that the estimator requires hold? (Chapter 10.)
+
+If any of these returns "no," the point estimate above does not warrant a causal interpretation. The book's argument is that all three do.
+
+## Code
+
+```{r}
+#| file: scripts/40_causal_main/41_rbvp_main.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/40_causal_main/41_rbvp_main.R — full RBVP estimation pipeline (A1–A14 fixed)"
+```

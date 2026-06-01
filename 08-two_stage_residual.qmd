@@ -1,0 +1,48 @@
+---
+title: "Two-stage residual inclusion (2SRI) and the Wooldridge endogeneity test"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+The RBVP in Chapter 7 was designed to *correct* for endogeneity in C-section selection. Before relying on it, one should test for endogeneity at all. The standard non-parametric test is the Wooldridge control-function variant: fit a two-stage residual inclusion (2SRI) model, then test the significance of the first-stage residual in the second-stage outcome equation. If the residual coefficient is statistically significant, there is evidence of endogeneity; if not, the IV machinery may be correcting a problem the data does not detect [@terza2008twostage; @terza2018twostage; @wooldridge2015control].
+
+## Data and setup
+
+2SRI replicates the RBVP on the same data using a probit second stage. The cluster bootstrap uses 500 replicates. Implementation is in `scripts/40_causal_main/42_two_stage_residual_inclusion.R` with bug fixes A6–A7 applied (cluster resampling + weights propagation through `glm()`'s non-standard evaluation).
+
+## Results
+
+```{r}
+#| label: tbl-2sri
+#| tbl-cap: "2SRI replication of the RBVP estimates and the Wooldridge-style endogeneity test. The residual-coefficient p-value tests for endogeneity in each treatment × wave cell."
+s2ri <- load_2sri_summary()
+make_2sri_table(s2ri)
+```
+
+## Interpretation
+
+Two patterns matter:
+
+- **Sign-consistency.** For C-section in 2017–18 and 2022, the 2SRI direction agrees with the RBVP direction. In 2004 and 2011, the RBVP returns positive while 2SRI returns negative — a sign flip across estimators. ANC is more stable across all waves.
+- **The Wooldridge test.** For *C-section in every wave*, the residual-coefficient p-value exceeds 0.19. The test cannot reject the null of exogeneity. Only the 2022 ANC cell shows endogeneity (p = 0.035).
+
+Read literally: the entire IV machinery in this manuscript was deployed to correct endogeneity that, for C-section, the data cannot detect.
+
+That is a substantive finding independent of any of the implementation bugs A1–A14: the residual coefficient comes from a non-bootstrap point estimation, and cluster-bootstrap fixes do not change it.
+
+For a causal interpretation of the RBVP's 2022 result to be warranted, one needs to *also* claim that this Hausman-style test is underpowered against the relevant endogeneity. That is a defensible position; it is not a comfortable one. Either way, the Chapter-7 headline cannot be read alone.
+
+## Code
+
+```{r}
+#| file: scripts/40_causal_main/42_two_stage_residual_inclusion.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/40_causal_main/42_two_stage_residual_inclusion.R — 2SRI + Hausman-style endogeneity test"
+```

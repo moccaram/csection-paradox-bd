@@ -1,0 +1,47 @@
+---
+title: "IV validity: the cross-instrument placebo test"
+---
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("_common.R"))
+```
+
+## Motivation
+
+The exclusion restriction — that the instrument affects mortality *only through* the individual C-section decision — is the IV condition that cannot be tested directly. But it can be *falsified*. The cleanest falsification is the cross-instrument placebo test from Swanson & Hernán [@swanson2013iv]: if an instrument intended for treatment $D_1$ also predicts a different treatment $D_2$, then the instrument is not channeling its effect through $D_1$ alone — it's correlated with general healthcare access, social position, or some other community-level confound, and the exclusion restriction is violated.
+
+This chapter runs that test for both treatments (C-section, ANC-4+) using both instruments (community-LOO C-section rate, community-LOO ANC rate). Two treatments × two instruments × four waves gives eight cells. A single failure is bad; eight is decisive.
+
+## Data and setup
+
+The diagnostics are implemented in `scripts/40_causal_main/44_iv_validity_tests.R`. The script also runs first-stage F statistics, balance regressions against observable confounders, and the reduced-form regression of the outcome on the IV. The cross-instrument placebo is the single most direct test of exclusion.
+
+## Results
+
+```{r}
+#| label: tbl-placebo
+#| tbl-cap: "Cross-instrument placebo: every IV → wrong-treatment regression. A pass requires the IV to predict its own treatment but NOT the other. Bold-marked fails reject the exclusion restriction."
+plac <- load_iv_placebo()
+make_placebo_table(plac)
+```
+
+## Interpretation
+
+Eight cells. Eight failures. Every one at p < 10⁻⁷.
+
+The community-LOO C-section instrument strongly predicts ANC-4+ use in every wave; the community-LOO ANC instrument strongly predicts C-section in every wave. Both instruments are reflecting *general* healthcare access at the cluster level, not channeling their effect through their own treatment alone.
+
+This is the most direct evidence in the book that the exclusion restriction is violated. It is not a power problem (the p-values are at scientific-notation strength). It is a structural one: at the community level, the two instruments and the two treatments are too entangled to be separated. Angrist's critique of leave-one-out community-mean instruments [@angrist2014peer] applies; Betz, Cook & Hollenbach's critique of spatial aggregation [@betz2018spatial] applies.
+
+Whatever the 2022 RBVP coefficient is estimating, it is not the causal effect of C-section on mortality holding all else equal. It is a *bundled* effect of general healthcare-access expansion in a regime-shifting environment.
+
+## Code
+
+```{r}
+#| file: scripts/40_causal_main/44_iv_validity_tests.R
+#| eval: false
+#| code-fold: true
+#| code-summary: "scripts/40_causal_main/44_iv_validity_tests.R — full IV-validity diagnostic battery"
+```
